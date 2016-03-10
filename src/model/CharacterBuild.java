@@ -1,7 +1,6 @@
 package model;
 
-import java.util.List;
-
+import controller.BuildConstants;
 import enumerators.BirthsignEnum;
 import enumerators.GenderEnum;
 import enumerators.PrimaryAttrEnum;
@@ -11,11 +10,7 @@ import enumerators.SpecializationEnum;
 
 public class CharacterBuild {
 	
-	private final int minHealth;
-	private final int minMagicka;
-	private final int minStamina;
-	private final int minCarryWeight;
-	private final List<Skill> skills;
+	private final Skill[] skills;
 	
 	private RaceEnum race;
 	private GenderEnum gender;
@@ -32,22 +27,18 @@ public class CharacterBuild {
 	private int currentStamina;
 	private int currentCarryWeight;
 	
-	public CharacterBuild(int minHealth, int minMagicka, int minStamina, int minCarryWeight, List<Skill> skills) {
-		this.minHealth = minHealth;
-		this.minMagicka = minMagicka;
-		this.minStamina = minStamina;
-		this.minCarryWeight = minCarryWeight;
+	public CharacterBuild(Skill[] skills) {
 		this.skills = skills;
 		
 		this.currentLevel = 1;
 		this.perksAvailable = 0;
-		this.currentHealth = minHealth;
-		this.currentMagicka = minMagicka;
-		this.currentStamina = minStamina;
-		this.currentCarryWeight = minCarryWeight;
+		this.currentHealth = BuildConstants.ATTRIBUTE_MINIMUM;
+		this.currentMagicka = BuildConstants.ATTRIBUTE_MINIMUM;
+		this.currentStamina = BuildConstants.ATTRIBUTE_MINIMUM;
+		this.currentCarryWeight = BuildConstants.CARRY_WEIGHT_MINIMUM;
 	}
 	
-	public List<Skill> getSkills() {
+	public Skill[] getSkills() {
 		return skills;
 	}
 	
@@ -73,13 +64,13 @@ public class CharacterBuild {
 	}
 	
 	public void setCurrentHealth(int health) throws Exception {
-		if(health >= minHealth) {
+		if(health >= BuildConstants.ATTRIBUTE_MINIMUM) {
 			currentHealth = health;
 		}
 		else {
 			throw new Exception("Current health of the character must be greater or equal to minimum health!\n"
 					+ "Your value: "+health+".\n"
-					+ "Minimum health: "+minHealth+".");
+					+ "Minimum health: "+BuildConstants.ATTRIBUTE_MINIMUM+".");
 		}
 	}
 	
@@ -88,13 +79,13 @@ public class CharacterBuild {
 	}
 	
 	public void setCurrentMagicka(int magicka) throws Exception {
-		if(magicka >= minMagicka) {
+		if(magicka >= BuildConstants.ATTRIBUTE_MINIMUM) {
 			currentMagicka = magicka;
 		}
 		else {
 			throw new Exception("Current magicka of the character must be greater or equal to minimum magicka!\n"
 					+ "Your value: "+magicka+".\n"
-					+ "Minimum magicka: "+minMagicka+".");
+					+ "Minimum magicka: "+BuildConstants.ATTRIBUTE_MINIMUM+".");
 		}
 	}
 	
@@ -103,13 +94,13 @@ public class CharacterBuild {
 	}
 	
 	public void setCurrentStamina(int stamina) throws Exception {
-		if(stamina >= minStamina) {
+		if(stamina >= BuildConstants.ATTRIBUTE_MINIMUM) {
 			currentStamina = stamina;
 		}
 		else {
 			throw new Exception("Current stamina of the character must be greater or equal to minimum stamina!\n"
 					+ "Your value: "+stamina+".\n"
-					+ "Minimum stamina: "+minStamina+".");
+					+ "Minimum stamina: "+BuildConstants.ATTRIBUTE_MINIMUM+".");
 		}
 	}
 	
@@ -118,13 +109,13 @@ public class CharacterBuild {
 	}
 	
 	public void setCurrentCarryWeight(int carryWeight) throws Exception {
-		if(carryWeight >= minCarryWeight) {
+		if(carryWeight >= BuildConstants.ATTRIBUTE_MINIMUM) {
 			currentCarryWeight = carryWeight;
 		}
 		else {
 			throw new Exception("Current carry weight of the character must be greater or equal to minimum carry weight!\n"
 					+ "Your value: "+carryWeight+".\n"
-					+ "Minimum carry weight: "+minCarryWeight+".");
+					+ "Minimum carry weight: "+BuildConstants.ATTRIBUTE_MINIMUM+".");
 		}
 	}
 	
@@ -187,6 +178,4 @@ public class CharacterBuild {
 	public void setSkillBonuses(int[] skillBonuses) {
 		this.skillBonuses = skillBonuses;
 	}
-	
-	
 }

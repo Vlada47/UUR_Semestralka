@@ -1,24 +1,19 @@
 package model;
 
+import enumerators.PerkEnum;
+
 public class Perk {
 	
-	private final String perkLabel;
-	private final String perkDescription;
-	private final int maxLevel;
-	private final int[] skillLevels;
-	
+	private PerkEnum perkInstance;
 	private int levelsTaken;
 	
-	public Perk(String perkLabel, String perkDescription, int maxLevel, int[] skillLevels) {
-		this.perkLabel = perkLabel;
-		this.perkDescription = perkDescription;
-		this.maxLevel = maxLevel;
-		this.skillLevels = skillLevels;
+	public Perk(PerkEnum perkInstance) {
+		this.perkInstance = perkInstance;
 		this.levelsTaken = 0;
 	}
 	
 	public boolean takeLevel(int skillLevel) {
-		if((levelsTaken < maxLevel) && (skillLevel >= skillLevels[levelsTaken])) {
+		if((levelsTaken < perkInstance.getMaxLevel()) && (skillLevel >= perkInstance.getSkillLevels()[levelsTaken])) {
 			levelsTaken++;
 			return true;
 		}
@@ -37,32 +32,20 @@ public class Perk {
 		levelsTaken = 0;
 	}
 	
-	public String getPerkLabel() {
-		return perkLabel;
-	}
-	
-	public String getPerkDescription() {
-		return perkDescription;
+	public PerkEnum getPerkInstance() {
+		return perkInstance;
 	}
 	
 	public int getLevelsTaken() {
 		return levelsTaken;
 	}
 	
-	public int getMaxLevel() {
-		return maxLevel;
-	}
-	
-	public int[] getSkillLevels() {
-		return skillLevels;
-	}
-	
 	@Override
 	public String toString() {
-		String str = "Perk "+perkLabel+":\n"
-				+ "- levels "+levelsTaken+"/"+maxLevel+"\n"
+		String str = "Perk "+perkInstance.getLabel()+":\n"
+				+ "- levels "+levelsTaken+"/"+perkInstance.getMaxLevel()+"\n"
 						+ "- description:\n"
-						+ perkDescription;
+						+ perkInstance.getDescription();
 		
 		return str;
 	}
