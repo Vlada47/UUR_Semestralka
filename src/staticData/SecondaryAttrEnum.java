@@ -1,4 +1,4 @@
-package enumerators;
+package staticData;
 
 public enum SecondaryAttrEnum {
 	STRENGTH(0,"Strength"),

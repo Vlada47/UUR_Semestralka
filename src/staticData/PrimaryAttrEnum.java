@@ -1,14 +1,14 @@
-package enumerators;
+package staticData;
 
-public enum SpecializationEnum {
-	COMBAT(0,"Combat"),
-	MAGIC(1,"Magic"),
-	STEALTH(2,"Stealth");
+public enum PrimaryAttrEnum {
+	HEALTH(0,"Health"),
+	MAGICKA(1,"Magicka"),
+	STAMINA(2,"Stamina");
 	
 	private final int id;
 	private final String label;
 	
-	SpecializationEnum(int id, String label) {
+	PrimaryAttrEnum(int id, String label) {
 		this.id = id;
 		this.label = label;
 	}

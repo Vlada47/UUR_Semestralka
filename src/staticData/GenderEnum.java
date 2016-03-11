@@ -1,14 +1,13 @@
-package enumerators;
+package staticData;
 
-public enum PrimaryAttrEnum {
-	HEALTH(0,"Health"),
-	MAGICKA(1,"Magicka"),
-	STAMINA(2,"Stamina");
+public enum GenderEnum {
+	MALE(0,"Male"),
+	FEMALE(1,"Female");
 	
 	private final int id;
 	private final String label;
 	
-	PrimaryAttrEnum(int id, String label) {
+	GenderEnum(int id, String label) {
 		this.id = id;
 		this.label = label;
 	}

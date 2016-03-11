@@ -1,13 +1,14 @@
-package enumerators;
+package staticData;
 
-public enum GenderEnum {
-	MALE(0,"Male"),
-	FEMALE(1,"Female");
+public enum SpecializationEnum {
+	COMBAT(0,"Combat"),
+	MAGIC(1,"Magic"),
+	STEALTH(2,"Stealth");
 	
 	private final int id;
 	private final String label;
 	
-	GenderEnum(int id, String label) {
+	SpecializationEnum(int id, String label) {
 		this.id = id;
 		this.label = label;
 	}

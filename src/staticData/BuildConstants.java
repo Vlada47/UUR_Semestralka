@@ -1,4 +1,4 @@
-package controller;
+package staticData;
 
 public class BuildConstants {
 	
@@ -11,11 +11,6 @@ public class BuildConstants {
 	public static final int ATTRIBUTE_MINIMUM = 100;
 	public static final int CARRY_WEIGHT_MINIMUM = 300;
 	public static final int PRIMARY_ATTRIBUTE_BONUS = 20;
-	
-	//points level distribution constants
-	public static final int[] ATTRIBUTE_POINTS = new int[MAX_CHARACTER_LEVEL];
-	public static final int[] CARRY_WEIGHT_POINTS = new int[MAX_CHARACTER_LEVEL];
-	public static final int[] PERK_POINTS = new int[MAX_CHARACTER_LEVEL];
 	
 	//races (males/females) attributes modifiers
 	public static final int[][] HEALTH_MODIFIERS = {{0,-5},{-10,-10},{5,5},{-10,-10},{-5,-5},{5,0},{-10,-10},{15,10},{20,15},{5,5}};

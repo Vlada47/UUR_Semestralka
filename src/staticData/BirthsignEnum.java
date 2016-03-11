@@ -1,4 +1,4 @@
-package enumerators;
+package staticData;
 
 public enum BirthsignEnum {
 	APPRENTICE(0,"The Apprentice"),

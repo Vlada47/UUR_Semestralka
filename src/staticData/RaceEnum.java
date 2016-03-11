@@ -1,4 +1,4 @@
-package enumerators;
+package staticData;
 
 public enum RaceEnum {
 	ALTMER(0,"Altmer"),

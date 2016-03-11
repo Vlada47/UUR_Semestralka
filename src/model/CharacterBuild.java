@@ -1,12 +1,12 @@
 package model;
 
-import controller.BuildConstants;
-import enumerators.BirthsignEnum;
-import enumerators.GenderEnum;
-import enumerators.PrimaryAttrEnum;
-import enumerators.RaceEnum;
-import enumerators.SecondaryAttrEnum;
-import enumerators.SpecializationEnum;
+import staticData.BirthsignEnum;
+import staticData.BuildConstants;
+import staticData.GenderEnum;
+import staticData.PrimaryAttrEnum;
+import staticData.RaceEnum;
+import staticData.SecondaryAttrEnum;
+import staticData.SpecializationEnum;
 
 public class CharacterBuild {
 	
@@ -27,6 +27,10 @@ public class CharacterBuild {
 	private int currentStamina;
 	private int currentCarryWeight;
 	
+	private boolean mastery;
+	private boolean focus;
+	private boolean prodigy;
+	
 	public CharacterBuild(Skill[] skills) {
 		this.skills = skills;
 		
@@ -36,6 +40,10 @@ public class CharacterBuild {
 		this.currentMagicka = BuildConstants.ATTRIBUTE_MINIMUM;
 		this.currentStamina = BuildConstants.ATTRIBUTE_MINIMUM;
 		this.currentCarryWeight = BuildConstants.CARRY_WEIGHT_MINIMUM;
+		
+		this.mastery = false;
+		this.focus = false;
+		this.prodigy = false;
 	}
 	
 	public Skill[] getSkills() {
@@ -177,5 +185,29 @@ public class CharacterBuild {
 
 	public void setSkillBonuses(int[] skillBonuses) {
 		this.skillBonuses = skillBonuses;
+	}
+
+	public boolean isMastery() {
+		return mastery;
+	}
+
+	public void setMastery(boolean mastery) {
+		this.mastery = mastery;
+	}
+
+	public boolean isFocus() {
+		return focus;
+	}
+
+	public void setFocus(boolean focus) {
+		this.focus = focus;
+	}
+
+	public boolean isProdigy() {
+		return prodigy;
+	}
+
+	public void setProdigy(boolean prodigy) {
+		this.prodigy = prodigy;
 	}
 }
