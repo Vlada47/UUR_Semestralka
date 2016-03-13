@@ -9,6 +9,7 @@ import staticData.SkillEnum;
 
 public class Controller {
 	
+	private static boolean warningStatus = true;
 	private static CharacterBuild characterBuild;
 	
 	public static void createBuild() {
@@ -47,6 +48,14 @@ public class Controller {
 	public static void setBuild(CharacterBuild charBuild) {
 		characterBuild = null;
 		characterBuild = charBuild;
+	}
+	
+	public static void setWarningStatus(boolean wStatus) {
+		warningStatus = wStatus;
+	}
+	
+	public static boolean getWarningStatus() {
+		return warningStatus;
 	}
 
 }
