@@ -8,8 +8,8 @@ public class BuildConstants {
 	public static final int MAX_CHARACTER_LEVEL = 100;
 	public static final int MIN_SKILL_LEVEL = 5;
 	public static final int MAX_SKILL_LEVEL = 100;
-	public static final int ATTRIBUTE_MINIMUM = 100;
-	public static final int CARRY_WEIGHT_MINIMUM = 300;
+	public static final int ATTRIBUTE_BASE = 100;
+	public static final int CARRY_WEIGHT_BASE = 300;
 	public static final int PRIMARY_ATTRIBUTE_BONUS = 20;
 	
 	//races (males/females) attributes modifiers

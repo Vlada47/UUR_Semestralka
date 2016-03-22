@@ -4,23 +4,20 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import staticData.PerkConstants;
 import view.AppMenuBar;
+import view.LeftPane;
 
 public class Main extends Application {
 	
 	private static final String APP_TITLE = "Skyrim Perkus Maximus Character Calculator";
 	private static final int STAGE_MIN_WIDTH = 1280;
 	private static final int STAGE_MIN_HEIGHT = 720;
+	
+	private AppMenuBar appMenuBar;
+	private LeftPane leftPane;
 
 	public static void main(String[] args) {
-		//launch(args);
-		for(String[] labels : PerkConstants.PERK_LABELS) {
-			for(int i = 0; i < labels.length; i++) {
-				System.out.println(labels[i]+": "+i);
-			}
-			System.out.println("---");
-		}
+		launch(args);
 	}
 
 	@Override
@@ -32,7 +29,11 @@ public class Main extends Application {
 		BorderPane root = new BorderPane();
 		Scene scene = new Scene(root, STAGE_MIN_WIDTH, STAGE_MIN_HEIGHT);
 		
-		root.setTop(new AppMenuBar());
+		appMenuBar = new AppMenuBar();
+		leftPane = new LeftPane();
+		
+		root.setTop(appMenuBar);
+		root.setLeft(leftPane);
 		
 		primaryStage.setScene(scene);
 		primaryStage.show();

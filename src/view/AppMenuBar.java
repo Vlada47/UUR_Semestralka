@@ -21,9 +21,7 @@ public class AppMenuBar extends MenuBar {
 	public AppMenuBar() {
 		super();
 		
-		Menu mainMenu = createMainMenu();
-		Menu helpMenu = createHelpMenu();
-		this.getMenus().addAll(mainMenu,helpMenu);
+		this.getMenus().addAll(createMainMenu(),createHelpMenu());
 	}
 	
 	private Menu createMainMenu() {

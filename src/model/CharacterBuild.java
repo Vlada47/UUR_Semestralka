@@ -36,10 +36,10 @@ public class CharacterBuild {
 		
 		this.currentLevel = 1;
 		this.perksAvailable = 0;
-		this.currentHealth = BuildConstants.ATTRIBUTE_MINIMUM;
-		this.currentMagicka = BuildConstants.ATTRIBUTE_MINIMUM;
-		this.currentStamina = BuildConstants.ATTRIBUTE_MINIMUM;
-		this.currentCarryWeight = BuildConstants.CARRY_WEIGHT_MINIMUM;
+		this.currentHealth = BuildConstants.ATTRIBUTE_BASE;
+		this.currentMagicka = BuildConstants.ATTRIBUTE_BASE;
+		this.currentStamina = BuildConstants.ATTRIBUTE_BASE;
+		this.currentCarryWeight = BuildConstants.CARRY_WEIGHT_BASE;
 		
 		this.mastery = false;
 		this.focus = false;
@@ -72,13 +72,13 @@ public class CharacterBuild {
 	}
 	
 	public void setCurrentHealth(int health) throws Exception {
-		if(health >= BuildConstants.ATTRIBUTE_MINIMUM) {
+		if(health >= BuildConstants.ATTRIBUTE_BASE) {
 			currentHealth = health;
 		}
 		else {
 			throw new Exception("Current health of the character must be greater or equal to minimum health!\n"
 					+ "Your value: "+health+".\n"
-					+ "Minimum health: "+BuildConstants.ATTRIBUTE_MINIMUM+".");
+					+ "Minimum health: "+BuildConstants.ATTRIBUTE_BASE+".");
 		}
 	}
 	
@@ -87,13 +87,13 @@ public class CharacterBuild {
 	}
 	
 	public void setCurrentMagicka(int magicka) throws Exception {
-		if(magicka >= BuildConstants.ATTRIBUTE_MINIMUM) {
+		if(magicka >= BuildConstants.ATTRIBUTE_BASE) {
 			currentMagicka = magicka;
 		}
 		else {
 			throw new Exception("Current magicka of the character must be greater or equal to minimum magicka!\n"
 					+ "Your value: "+magicka+".\n"
-					+ "Minimum magicka: "+BuildConstants.ATTRIBUTE_MINIMUM+".");
+					+ "Minimum magicka: "+BuildConstants.ATTRIBUTE_BASE+".");
 		}
 	}
 	
@@ -102,13 +102,13 @@ public class CharacterBuild {
 	}
 	
 	public void setCurrentStamina(int stamina) throws Exception {
-		if(stamina >= BuildConstants.ATTRIBUTE_MINIMUM) {
+		if(stamina >= BuildConstants.ATTRIBUTE_BASE) {
 			currentStamina = stamina;
 		}
 		else {
 			throw new Exception("Current stamina of the character must be greater or equal to minimum stamina!\n"
 					+ "Your value: "+stamina+".\n"
-					+ "Minimum stamina: "+BuildConstants.ATTRIBUTE_MINIMUM+".");
+					+ "Minimum stamina: "+BuildConstants.ATTRIBUTE_BASE+".");
 		}
 	}
 	
@@ -117,13 +117,13 @@ public class CharacterBuild {
 	}
 	
 	public void setCurrentCarryWeight(int carryWeight) throws Exception {
-		if(carryWeight >= BuildConstants.ATTRIBUTE_MINIMUM) {
+		if(carryWeight >= BuildConstants.ATTRIBUTE_BASE) {
 			currentCarryWeight = carryWeight;
 		}
 		else {
 			throw new Exception("Current carry weight of the character must be greater or equal to minimum carry weight!\n"
 					+ "Your value: "+carryWeight+".\n"
-					+ "Minimum carry weight: "+BuildConstants.ATTRIBUTE_MINIMUM+".");
+					+ "Minimum carry weight: "+BuildConstants.ATTRIBUTE_BASE+".");
 		}
 	}
 	
