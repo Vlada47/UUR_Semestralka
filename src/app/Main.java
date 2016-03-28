@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import view.AppMenuBar;
+import view.CenterPane;
 import view.LeftPane;
 
 public class Main extends Application {
@@ -15,6 +16,7 @@ public class Main extends Application {
 	
 	private AppMenuBar appMenuBar;
 	private LeftPane leftPane;
+	private CenterPane centerPane;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -31,9 +33,11 @@ public class Main extends Application {
 		
 		appMenuBar = new AppMenuBar();
 		leftPane = new LeftPane();
+		centerPane = new CenterPane();
 		
 		root.setTop(appMenuBar);
 		root.setLeft(leftPane);
+		root.setCenter(centerPane);
 		
 		primaryStage.setScene(scene);
 		primaryStage.show();
