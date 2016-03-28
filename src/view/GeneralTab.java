@@ -49,36 +49,42 @@ public class GeneralTab extends Tab {
 		Label raceLabel = new Label(RACE_LABEL);
 		raceComboBox = new ComboBox<>();
 		raceComboBox.getItems().setAll(RaceEnum.values());
+		raceComboBox.setValue(RaceEnum.ALTMER);
 		raceBox.getChildren().addAll(raceLabel, raceComboBox);
 		
 		HBox genderBox = new HBox();
 		Label genderLabel = new Label(GENDER_LABEL);
 		genderComboBox = new ComboBox<>();
 		genderComboBox.getItems().setAll(GenderEnum.values());
+		genderComboBox.setValue(GenderEnum.MALE);
 		genderBox.getChildren().addAll(genderLabel, genderComboBox);
 		
 		HBox specBox = new HBox();
 		Label specLabel = new Label(SPEC_LABEL);
 		specComboBox = new ComboBox<>();
 		specComboBox.getItems().setAll(SpecializationEnum.values());
-		raceBox.getChildren().addAll(specLabel, specComboBox);
+		specComboBox.setValue(SpecializationEnum.COMBAT);
+		specBox.getChildren().addAll(specLabel, specComboBox);
 		
 		HBox primAttrBox = new HBox();
 		Label primAttrLabel = new Label(PRIM_ATTR_LABEL);
 		primAttrComboBox = new ComboBox<>();
 		primAttrComboBox.getItems().setAll(PrimaryAttrEnum.values());
+		primAttrComboBox.setValue(PrimaryAttrEnum.HEALTH);
 		primAttrBox.getChildren().addAll(primAttrLabel, primAttrComboBox);
 		
 		HBox secAttrBox = new HBox();
 		Label secAttrLabel = new Label(SEC_ATTR_LABEL);
 		secAttrComboBox = new ComboBox<>();
 		secAttrComboBox.getItems().setAll(SecondaryAttrEnum.values());
+		secAttrComboBox.setValue(SecondaryAttrEnum.AGILITY);
 		secAttrBox.getChildren().addAll(secAttrLabel, secAttrComboBox);
 		
 		HBox birthsignBox = new HBox();
 		Label birthsignLabel = new Label(BIRTHSIGN);
 		birthsignComboBox = new ComboBox<>();
 		birthsignComboBox.getItems().setAll(BirthsignEnum.values());
+		birthsignComboBox.setValue(BirthsignEnum.APPRENTICE);
 		birthsignBox.getChildren().addAll(birthsignLabel, birthsignComboBox);
 		
 		attributesVBox.getChildren().addAll(boxLabel, raceBox, genderBox, specBox, primAttrBox, secAttrBox, birthsignBox);

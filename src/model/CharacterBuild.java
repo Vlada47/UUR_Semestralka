@@ -51,12 +51,7 @@ public class CharacterBuild {
 	}
 	
 	public void setCurrentLevel(int level) throws Exception {
-		if((level >= 1) && (level <= 100)) {
-			currentLevel = level;
-		}
-		else {
-			throw new Exception("Level of the character must be at least 1 and no more than 100!");
-		}
+		currentLevel = level;
 	}
 	
 	public int getCurrentLevel() {
@@ -71,60 +66,32 @@ public class CharacterBuild {
 		return perksAvailable;
 	}
 	
-	public void setCurrentHealth(int health) throws Exception {
-		if(health >= BuildConstants.ATTRIBUTE_BASE) {
-			currentHealth = health;
-		}
-		else {
-			throw new Exception("Current health of the character must be greater or equal to minimum health!\n"
-					+ "Your value: "+health+".\n"
-					+ "Minimum health: "+BuildConstants.ATTRIBUTE_BASE+".");
-		}
+	public void setCurrentHealth(int health) {
+		currentHealth = health;
 	}
 	
 	public int getCurrentHealth() {
 		return currentHealth;
 	}
 	
-	public void setCurrentMagicka(int magicka) throws Exception {
-		if(magicka >= BuildConstants.ATTRIBUTE_BASE) {
-			currentMagicka = magicka;
-		}
-		else {
-			throw new Exception("Current magicka of the character must be greater or equal to minimum magicka!\n"
-					+ "Your value: "+magicka+".\n"
-					+ "Minimum magicka: "+BuildConstants.ATTRIBUTE_BASE+".");
-		}
+	public void setCurrentMagicka(int magicka){
+		currentMagicka = magicka;
 	}
 	
 	public int getCurrentMagicka() {
 		return currentMagicka;
 	}
 	
-	public void setCurrentStamina(int stamina) throws Exception {
-		if(stamina >= BuildConstants.ATTRIBUTE_BASE) {
+	public void setCurrentStamina(int stamina) {
 			currentStamina = stamina;
-		}
-		else {
-			throw new Exception("Current stamina of the character must be greater or equal to minimum stamina!\n"
-					+ "Your value: "+stamina+".\n"
-					+ "Minimum stamina: "+BuildConstants.ATTRIBUTE_BASE+".");
-		}
 	}
 	
 	public int getCurrentStamina() {
 		return currentStamina;
 	}
 	
-	public void setCurrentCarryWeight(int carryWeight) throws Exception {
-		if(carryWeight >= BuildConstants.ATTRIBUTE_BASE) {
-			currentCarryWeight = carryWeight;
-		}
-		else {
-			throw new Exception("Current carry weight of the character must be greater or equal to minimum carry weight!\n"
-					+ "Your value: "+carryWeight+".\n"
-					+ "Minimum carry weight: "+BuildConstants.ATTRIBUTE_BASE+".");
-		}
+	public void setCurrentCarryWeight(int carryWeight) {
+		currentCarryWeight = carryWeight;
 	}
 	
 	public int getCurrentCarryWeight() {

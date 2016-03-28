@@ -49,7 +49,7 @@ public class LeftPane extends VBox {
 		HBox healthBox = new HBox(ATTRIBUTE_FIELDS_SPACING, new Label(PrimaryAttrEnum.HEALTH.getLabel()), healthValueField);
 		HBox magickaBox = new HBox(ATTRIBUTE_FIELDS_SPACING, new Label(PrimaryAttrEnum.MAGICKA.getLabel()), magickaValueField);
 		HBox staminaBox = new HBox(ATTRIBUTE_FIELDS_SPACING, new Label(PrimaryAttrEnum.STAMINA.getLabel()), staminaValueField);
-		HBox weightBox = new HBox(ATTRIBUTE_FIELDS_SPACING, new Label(PrimaryAttrEnum.CARRY_WEIGHT.getLabel()), weightValueField);
+		HBox weightBox = new HBox(ATTRIBUTE_FIELDS_SPACING, new Label("Carry Weight"), weightValueField);
 		
 		generalInfoPane.getChildren().addAll(levelBox, perksBox, healthBox, magickaBox, staminaBox, weightBox);
 		

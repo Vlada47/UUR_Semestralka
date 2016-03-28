@@ -18,17 +18,8 @@ public class Skill {
 		this.currentLevel = BuildConstants.MIN_SKILL_LEVEL;
 	}
 	
-	public void setStartingLevel(int level) throws Exception {
-		if((level >= BuildConstants.MIN_SKILL_LEVEL) && (level <= BuildConstants.MAX_SKILL_LEVEL)) {
-			startingLevel = level;
-		}
-		else {
-			throw new Exception("Starting level of the skill must in the interval between minimum and maximum level!\n"
-					+ "Skill: "+skillInstance.getLabel()+".\n"
-					+ "Your value: "+level+".\n"
-					+ "Minimum level: "+BuildConstants.MIN_SKILL_LEVEL+"."
-					+ "Maximum level: "+BuildConstants.MAX_SKILL_LEVEL+".");
-		}
+	public void setStartingLevel(int level) {
+		startingLevel = level;
 	}
 	
 	public boolean takeLevel() {

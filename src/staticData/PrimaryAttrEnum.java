@@ -3,8 +3,7 @@ package staticData;
 public enum PrimaryAttrEnum {
 	HEALTH(0,"Health"),
 	MAGICKA(1,"Magicka"),
-	STAMINA(2,"Stamina"),
-	CARRY_WEIGHT(3,"Carry Weight");
+	STAMINA(2,"Stamina");
 	
 	private final int id;
 	private final String label;
