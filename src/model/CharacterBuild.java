@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import staticData.BirthsignEnum;
 import staticData.BuildConstants;
 import staticData.GenderEnum;
@@ -11,6 +14,7 @@ import staticData.SpecializationEnum;
 public class CharacterBuild {
 	
 	private final Skill[] skills;
+	private final List<Attribute> attributes;
 	
 	private RaceEnum race;
 	private GenderEnum gender;
@@ -32,6 +36,7 @@ public class CharacterBuild {
 	private boolean prodigy;
 	
 	public CharacterBuild(Skill[] skills) {
+		this.attributes = new ArrayList<Attribute>();
 		this.skills = skills;
 		
 		this.currentLevel = 1;
@@ -50,7 +55,11 @@ public class CharacterBuild {
 		return skills;
 	}
 	
-	public void setCurrentLevel(int level) throws Exception {
+	public List<Attribute> getAttributes() {
+		return attributes;
+	}
+	
+	public void setCurrentLevel(int level) {
 		currentLevel = level;
 	}
 	
