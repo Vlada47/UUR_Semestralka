@@ -1,5 +1,6 @@
 package app;
 
+import controller.Controller;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -21,7 +22,7 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle(APP_TITLE);
@@ -34,6 +35,7 @@ public class Main extends Application {
 		appMenuBar = new AppMenuBar();
 		leftPane = new LeftPane();
 		centerPane = new CenterPane();
+		Controller.setGuiReferences(leftPane, centerPane);
 		
 		root.setTop(appMenuBar);
 		root.setLeft(leftPane);

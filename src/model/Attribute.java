@@ -4,18 +4,12 @@ import staticData.PrimaryAttrEnum;
 
 public class Attribute {
 	
-	private int level;
 	private PrimaryAttrEnum attribute;
 	private int gain;
 	
-	public Attribute(int level, PrimaryAttrEnum attribute, int gain) {
-		this.level = level;
+	public Attribute(PrimaryAttrEnum attribute, int gain) {
 		this.attribute = attribute;
 		this.gain = gain;
-	}
-
-	public int getLevel() {
-		return level;
 	}
 
 	public PrimaryAttrEnum getAttribute() {

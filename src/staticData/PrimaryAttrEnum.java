@@ -1,16 +1,20 @@
 package staticData;
 
 public enum PrimaryAttrEnum {
-	HEALTH(0,"Health"),
-	MAGICKA(1,"Magicka"),
-	STAMINA(2,"Stamina");
+	HEALTH(0,"Health","+20 points to Health."),
+	MAGICKA(1,"Magicka","+20 points to Magicka."),
+	STAMINA(2,"Stamina","+20 points to Stamina.");
+	
+	public static final String LABEL = "Primary Attribute"; 
 	
 	private final int id;
 	private final String label;
+	private final String description;
 	
-	PrimaryAttrEnum(int id, String label) {
+	PrimaryAttrEnum(int id, String label, String description) {
 		this.id = id;
 		this.label = label;
+		this.description = description;
 	}
 	
 	public int getId() {
@@ -19,6 +23,10 @@ public enum PrimaryAttrEnum {
 	
 	public String getLabel() {
 		return label;
+	}
+	
+	public String getDescription() {
+		return description;
 	}
 	
 	@Override

@@ -1,18 +1,24 @@
 package view;
 
+import java.util.List;
+
+import controller.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import staticData.BuildConstants;
+import staticData.SkillEnum;
 import view.recordObjects.PerkRec;
 
 public class SkillTab extends Tab {
@@ -26,16 +32,19 @@ public class SkillTab extends Tab {
 	private static final String REQ_COL = "Prerequisite perks";
 	private static final String CURLVL_COL = "Current level";
 	private static final String MAXLVL_COL = "Maximal level";
+	private static final String SKILLLVL_COL = "Skill levels";
 	
 	private Label skillLabel;
 	private TextField levelField;
 	private TableView<PerkRec> perkTable;
 	private ObservableList<PerkRec> perkList;
+	private ComboBox<SkillEnum> skillBox;
 	
 	public SkillTab() {
 		super();
 		this.setText(TAB_LABEL);
 		this.setContent(new HBox(createTableBox(), createButtonBox()));
+		this.setDisable(true);
 	}
 	
 	private VBox createTableBox() {
@@ -43,7 +52,7 @@ public class SkillTab extends Tab {
 		
 		skillLabel = new Label(DEF_SKILL_TITLE);
 		levelField = new TextField(Integer.toString(BuildConstants.MIN_SKILL_LEVEL));
-		levelField.setDisable(true);
+		levelField.setEditable(false);
 		
 		tableBox.getChildren().addAll(skillLabel, levelField, createTable());
 		
@@ -55,6 +64,12 @@ public class SkillTab extends Tab {
 		
 		perkTable = new TableView<PerkRec>();
 		perkTable.setEditable(false);
+		
+		perkTable.setRowFactory(value -> {
+			TableRow<PerkRec> row = new TableRow<>();
+			row.setOnMouseClicked(event -> rowClickAction(event, row));
+			return row;
+		});
 		
 		TableColumn<PerkRec, String> titleCol = new TableColumn<PerkRec, String>(TITLE_COL);
 		titleCol.setCellValueFactory(new PropertyValueFactory<PerkRec, String>("title"));
@@ -68,7 +83,10 @@ public class SkillTab extends Tab {
 		TableColumn<PerkRec, String> maxLvlCol = new TableColumn<PerkRec, String>(MAXLVL_COL);
 		maxLvlCol.setCellValueFactory(new PropertyValueFactory<PerkRec, String>("maxLevel"));
 		
-		perkTable.getColumns().setAll(titleCol, reqCol, curLvlCol, maxLvlCol);
+		TableColumn<PerkRec, String> skillLvlCol = new TableColumn<PerkRec, String>(SKILLLVL_COL);
+		skillLvlCol.setCellValueFactory(new PropertyValueFactory<PerkRec, String>("skillLevels"));
+		
+		perkTable.getColumns().setAll(titleCol, reqCol, curLvlCol, maxLvlCol, skillLvlCol);
 		perkTable.setItems(perkList);
 		
 		return perkTable;
@@ -77,16 +95,16 @@ public class SkillTab extends Tab {
 	private ObservableList<PerkRec> createDefaultPerkList() {
 		perkList = FXCollections.observableArrayList();
 		
-		perkList.add(new PerkRec("Perk 1", "...", 0, 2));
-		perkList.add(new PerkRec("Perk 2", "...", 0, 1));
-		perkList.add(new PerkRec("Perk 3", "...", 0, 1));
-		perkList.add(new PerkRec("Perk 4", "...", 0, 3));
-		perkList.add(new PerkRec("Perk 5", "...", 0, 2));
-		perkList.add(new PerkRec("Perk 6", "...", 0, 1));
-		perkList.add(new PerkRec("Perk 7", "...", 0, 2));
-		perkList.add(new PerkRec("Perk 8", "...", 0, 2));
-		perkList.add(new PerkRec("Perk 9", "...", 0, 3));
-		perkList.add(new PerkRec("Perk 10", "...", 0, 1));
+		perkList.add(new PerkRec(-1, "Perk 1", "...", 0, 1, "0"));
+		perkList.add(new PerkRec(-1, "Perk 2", "...", 0, 1, "0"));
+		perkList.add(new PerkRec(-1, "Perk 3", "...", 0, 1, "0"));
+		perkList.add(new PerkRec(-1, "Perk 4", "...", 0, 1, "0"));
+		perkList.add(new PerkRec(-1, "Perk 5", "...", 0, 1, "0"));
+		perkList.add(new PerkRec(-1, "Perk 6", "...", 0, 1, "0"));
+		perkList.add(new PerkRec(-1, "Perk 7", "...", 0, 1, "0"));
+		perkList.add(new PerkRec(-1, "Perk 8", "...", 0, 1, "0"));
+		perkList.add(new PerkRec(-1, "Perk 9", "...", 0, 1, "0"));
+		perkList.add(new PerkRec(-1, "Perk 10", "...", 0, 1, "0"));
 		
 		return perkList;
 	}
@@ -94,11 +112,45 @@ public class SkillTab extends Tab {
 	private VBox createButtonBox() {
 		VBox buttonBox = new VBox();
 		
-		Button levelPlusButt = new Button(BUTT_PLUS);
-		Button levelMinusButt = new Button(BUTT_MINUS);
-		Button skillResetButt = new Button(RES_BUTT_LABEL);
-		buttonBox.getChildren().addAll(levelPlusButt, levelMinusButt, skillResetButt);
+		skillBox = new ComboBox<>();
+		skillBox.getItems().setAll(SkillEnum.values());
+		skillBox.setValue(SkillEnum.ILLUSION);
+		skillBox.setOnAction(event -> Controller.changeSkill(skillBox.getValue()));
 		
+		Button levelPlusButt = new Button(BUTT_PLUS);
+		levelPlusButt.setOnAction(event -> Controller.takeSkillLevel());
+		
+		Button levelMinusButt = new Button(BUTT_MINUS);
+		levelMinusButt.setOnAction(event -> Controller.removeSkillLevel());
+		
+		Button skillResetButt = new Button(RES_BUTT_LABEL);
+		skillResetButt.setOnAction(event -> Controller.resetSkill());
+		
+		buttonBox.getChildren().addAll(skillBox, levelPlusButt, levelMinusButt, skillResetButt);
 		return buttonBox;
+	}
+	
+	private void rowClickAction(MouseEvent event, TableRow<PerkRec> row) {
+		int perkIndex = row.getItem().getIndex();
+		
+		if(event.getClickCount() == 2) {
+			Controller.takePerkLevel(perkIndex);
+		}
+		else if(event.getClickCount() == 1 && event.isControlDown()){
+			Controller.removePerkLevel(perkIndex);
+		}
+	}
+	
+	public void setCurrentSkill(SkillEnum skill) {
+		skillBox.setValue(skill);
+		skillLabel.setText(skill.getLabel());
+	}
+	
+	public void setCurrentSkillLevel(int level) {
+		levelField.setText(Integer.toString(level));
+	}
+	
+	public void setPerkList(List<PerkRec> perkList) {
+		this.perkList.setAll(perkList);
 	}
 }

@@ -1,7 +1,8 @@
 package view;
 
-import java.util.Stack;
+import java.util.List;
 
+import controller.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -24,21 +25,14 @@ public class AttrDistribTab extends Tab {
 	private static final String ATTR_COL = "Attribute";
 	private static final String GAIN_COL = "Gain";
 	
-	private int level;
 	private TableView<AttributeRec> attributeTable;
 	private ObservableList<AttributeRec> attributeList;
-	private final Stack<AttributeRec> lastHealth;
-	private final Stack<AttributeRec> lastMagicka;
-	private final Stack<AttributeRec> lastStamina;
-	
+
 	public AttrDistribTab() {
 		super();
-		this.level = 1;
-		this.lastHealth = new Stack<AttributeRec>();
-		this.lastMagicka = new Stack<AttributeRec>();
-		this.lastStamina = new Stack<AttributeRec>();
 		this.setText(TAB_LABEL);
 		this.setContent(new HBox(createButtonBox(), createTable()));
+		this.setDisable(true);
 	}
 	
 	private VBox createButtonBox() {
@@ -47,25 +41,25 @@ public class AttrDistribTab extends Tab {
 		HBox healthBox = new HBox();
 		Label healthLabel = new Label(PrimaryAttrEnum.HEALTH.getLabel());
 		Button healthPlusButt = new Button(BUTT_PLUS);
-		healthPlusButt.setOnAction(event -> plusHealth());
+		healthPlusButt.setOnAction(event -> Controller.increaseAttribute(PrimaryAttrEnum.HEALTH));
 		Button healthMinusButt = new Button(BUTT_MINUS);
-		healthMinusButt.setOnAction(event -> minusHealth());
+		healthMinusButt.setOnAction(event -> Controller.decreaseAttribute(PrimaryAttrEnum.HEALTH));
 		healthBox.getChildren().addAll(healthLabel, healthPlusButt, healthMinusButt);
 		
 		HBox magickaBox = new HBox();
 		Label magickaLabel = new Label(PrimaryAttrEnum.MAGICKA.getLabel());
 		Button magickaPlusButt = new Button(BUTT_PLUS);
-		magickaPlusButt.setOnAction(event -> plusMagicka());
+		magickaPlusButt.setOnAction(event -> Controller.increaseAttribute(PrimaryAttrEnum.MAGICKA));
 		Button magickaMinusButt = new Button(BUTT_MINUS);
-		magickaMinusButt.setOnAction(event -> minusMagicka());
+		magickaMinusButt.setOnAction(event -> Controller.decreaseAttribute(PrimaryAttrEnum.MAGICKA));
 		magickaBox.getChildren().addAll(magickaLabel, magickaPlusButt, magickaMinusButt);
 		
 		HBox staminaBox = new HBox();
 		Label staminaLabel = new Label(PrimaryAttrEnum.STAMINA.getLabel());
 		Button staminaPlusButt = new Button(BUTT_PLUS);
-		staminaPlusButt.setOnAction(event -> plusStamina());
+		staminaPlusButt.setOnAction(event -> Controller.increaseAttribute(PrimaryAttrEnum.STAMINA));
 		Button staminaMinusButt = new Button(BUTT_MINUS);
-		staminaMinusButt.setOnAction(event -> minusStamina());
+		staminaMinusButt.setOnAction(event -> Controller.decreaseAttribute(PrimaryAttrEnum.STAMINA));
 		staminaBox.getChildren().addAll(staminaLabel, staminaPlusButt, staminaMinusButt);
 		
 		buttonBox.getChildren().addAll(healthBox, magickaBox, staminaBox);
@@ -75,7 +69,7 @@ public class AttrDistribTab extends Tab {
 	
 	private TableView<AttributeRec> createTable() {
 		attributeList = FXCollections.observableArrayList();
-		attributeList.add(new AttributeRec(1, "-", 0));
+		attributeList.add(new AttributeRec(1, PrimaryAttrEnum.HEALTH.getLabel(), 0));
 		
 		attributeTable = new TableView<AttributeRec>();
 		attributeTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -96,42 +90,7 @@ public class AttrDistribTab extends Tab {
 		return attributeTable;
 	}
 	
-	private void plusHealth() {
-		level++;
-		lastHealth.push(new AttributeRec(level, PrimaryAttrEnum.HEALTH.getLabel(), 10));
-		attributeList.add(lastHealth.peek());
-	}
-	
-	private void plusMagicka() {
-		level++;
-		lastMagicka.push(new AttributeRec(level, PrimaryAttrEnum.MAGICKA.getLabel(), 10));
-		attributeList.add(lastMagicka.peek());
-	}
-	
-	private void plusStamina() {
-		level++;
-		lastStamina.push(new AttributeRec(level, PrimaryAttrEnum.STAMINA.getLabel(), 10));
-		attributeList.add(lastStamina.peek());
-	}
-	
-	private void minusHealth() {
-		if(!lastHealth.isEmpty()) {
-			attributeList.remove(lastHealth.pop());
-			level--;
-		}
-	}
-	
-	private void minusMagicka() {
-		if(!lastMagicka.isEmpty()) {
-			attributeList.remove(lastMagicka.pop());
-			level--;
-		}
-	}
-	
-	private void minusStamina() {
-		if(!lastStamina.isEmpty()) {
-			attributeList.remove(lastStamina.pop());
-			level--;
-		}
+	public void setAttributeList(List<AttributeRec> attributeList) {
+		this.attributeList.setAll(attributeList);
 	}
 }

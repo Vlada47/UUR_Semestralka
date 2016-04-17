@@ -18,10 +18,6 @@ public class Skill {
 		this.currentLevel = BuildConstants.MIN_SKILL_LEVEL;
 	}
 	
-	public void setStartingLevel(int level) {
-		startingLevel = level;
-	}
-	
 	public boolean takeLevel() {
 		if(currentLevel < BuildConstants.MAX_SKILL_LEVEL) {
 			currentLevel++; 
@@ -66,6 +62,11 @@ public class Skill {
 	
 	public Perk[] getPerks() {
 		return perks; 
+	}
+	
+	public void setStartingLevel(int level) {
+		startingLevel = level;
+		currentLevel = level;
 	}
 	
 	public int getStartingLevel() {

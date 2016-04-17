@@ -30,7 +30,7 @@ public class AppMenuBar extends MenuBar {
 		Menu menu = new Menu(MAIN_MENU_LABEL);
 		
 		MenuItem newBuildItem = new MenuItem(NEW_BUILD_LABEL);
-		newBuildItem.setOnAction(event -> Controller.createBuild());
+		newBuildItem.setOnAction(event -> newBuildAction());
 		
 		MenuItem saveBuildItem = new MenuItem(SAVE_BUILD_LABEL);
 		saveBuildItem.setOnAction(null);
@@ -74,5 +74,12 @@ public class AppMenuBar extends MenuBar {
 	
 	private void showManual() {
 		HelpWindow.getInstance(HelpWindow.MANUAL_WINDOW);
+	}
+	
+	private void newBuildAction() {
+		Controller.createCharacter();
+		Controller.setInfoFieldsDisable(false);
+		Controller.setBuildNotesDisable(false);
+		Controller.setGeneralTabDisable(false);
 	}
 }

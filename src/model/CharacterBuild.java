@@ -1,7 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 
 import staticData.BirthsignEnum;
 import staticData.BuildConstants;
@@ -14,7 +13,12 @@ import staticData.SpecializationEnum;
 public class CharacterBuild {
 	
 	private final Skill[] skills;
-	private final List<Attribute> attributes;
+	private final Attribute[] attributes;
+	private final Stack<Attribute> lastHealth;
+	private final Stack<Attribute> lastMagicka;
+	private final Stack<Attribute> lastStamina;
+	private final int[] perkCntAtLevelUp;
+	private final int[] attributeGainAtLevelUp;
 	
 	private RaceEnum race;
 	private GenderEnum gender;
@@ -22,41 +26,87 @@ public class CharacterBuild {
 	private PrimaryAttrEnum primaryAttribute;
 	private SecondaryAttrEnum secondaryAttribute;
 	private BirthsignEnum birthsign;
-	private int[] skillBonuses;
 	
 	private int currentLevel;
+	private double currentXP;
 	private int perksAvailable;
 	private int currentHealth;
 	private int currentMagicka;
 	private int currentStamina;
-	private int currentCarryWeight;
 	
-	private boolean mastery;
-	private boolean focus;
-	private boolean prodigy;
-	
+	private String buildNotes;
+
 	public CharacterBuild(Skill[] skills) {
-		this.attributes = new ArrayList<Attribute>();
 		this.skills = skills;
+		this.attributes = new Attribute[BuildConstants.MAX_CHARACTER_LEVEL];
+		this.lastHealth = new Stack<Attribute>();
+		this.lastMagicka = new Stack<Attribute>();
+		this.lastStamina = new Stack<Attribute>();
+		perkCntAtLevelUp = new int[BuildConstants.MAX_CHARACTER_LEVEL];
+		attributeGainAtLevelUp = new int[BuildConstants.MAX_CHARACTER_LEVEL];
+		
+		race = RaceEnum.ALTMER;
+		gender = GenderEnum.MALE;
+		specialization = SpecializationEnum.COMBAT;
+		primaryAttribute = PrimaryAttrEnum.HEALTH;
+		secondaryAttribute = SecondaryAttrEnum.STRENGTH;
+		birthsign = BirthsignEnum.APPRENTICE;
 		
 		this.currentLevel = 1;
 		this.perksAvailable = 0;
 		this.currentHealth = BuildConstants.ATTRIBUTE_BASE;
 		this.currentMagicka = BuildConstants.ATTRIBUTE_BASE;
 		this.currentStamina = BuildConstants.ATTRIBUTE_BASE;
-		this.currentCarryWeight = BuildConstants.CARRY_WEIGHT_BASE;
+		this.buildNotes = "Notes...";
 		
-		this.mastery = false;
-		this.focus = false;
-		this.prodigy = false;
+		attributes[0] = new Attribute(PrimaryAttrEnum.HEALTH, 0);
 	}
-	
+
 	public Skill[] getSkills() {
 		return skills;
 	}
 	
-	public List<Attribute> getAttributes() {
+	public int[] getPerkCntAtLevelUp() {
+		return perkCntAtLevelUp;
+	}
+
+	public int[] getAttributeGainAtLevelUp() {
+		return attributeGainAtLevelUp;
+	}
+	
+	public void addAttribute(Attribute attribute) {
+		for(Attribute a : attributes) {
+			if(a == null) a = attribute;
+			break;
+		}
+	}
+	
+	public Attribute[] getAttributes() {
 		return attributes;
+	}
+	
+	public void pushLastHealth(Attribute health) {
+		lastHealth.push(health);
+	}
+	
+	public Stack<Attribute> getLastHealth() {
+		return lastHealth;
+	}
+	
+	public void pushLastMagicka(Attribute magicka) {
+		lastMagicka.push(magicka);
+	}
+	
+	public Stack<Attribute> getLastMagicka() {
+		return lastMagicka;
+	}
+	
+	public void pushLastStamina(Attribute stamina) {
+		lastStamina.push(stamina);
+	}
+	
+	public Stack<Attribute> getLastStamina() {
+		return lastStamina;
 	}
 	
 	public void setCurrentLevel(int level) {
@@ -65,6 +115,14 @@ public class CharacterBuild {
 	
 	public int getCurrentLevel() {
 		return currentLevel;
+	}
+	
+	public double getCurrentXP() {
+		return currentXP;
+	}
+
+	public void setCurrentXP(double currentXP) {
+		this.currentXP = currentXP;
 	}
 	
 	public void setPerksAvailable(int perks) {
@@ -97,14 +155,6 @@ public class CharacterBuild {
 	
 	public int getCurrentStamina() {
 		return currentStamina;
-	}
-	
-	public void setCurrentCarryWeight(int carryWeight) {
-		currentCarryWeight = carryWeight;
-	}
-	
-	public int getCurrentCarryWeight() {
-		return currentCarryWeight;
 	}
 
 	public RaceEnum getRace() {
@@ -154,36 +204,12 @@ public class CharacterBuild {
 	public void setBirthsign(BirthsignEnum birthsign) {
 		this.birthsign = birthsign;
 	}
-
-	public int[] getSkillBonuses() {
-		return skillBonuses;
+	
+	public String getBuildNotes() {
+		return buildNotes;
 	}
 
-	public void setSkillBonuses(int[] skillBonuses) {
-		this.skillBonuses = skillBonuses;
-	}
-
-	public boolean isMastery() {
-		return mastery;
-	}
-
-	public void setMastery(boolean mastery) {
-		this.mastery = mastery;
-	}
-
-	public boolean isFocus() {
-		return focus;
-	}
-
-	public void setFocus(boolean focus) {
-		this.focus = focus;
-	}
-
-	public boolean isProdigy() {
-		return prodigy;
-	}
-
-	public void setProdigy(boolean prodigy) {
-		this.prodigy = prodigy;
+	public void setBuildNotes(String buildNotes) {
+		this.buildNotes = buildNotes;
 	}
 }

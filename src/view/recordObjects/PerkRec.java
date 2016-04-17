@@ -7,16 +7,24 @@ import javafx.beans.property.StringProperty;
 
 public class PerkRec {
 	
+	private int index;
 	private StringProperty title;
 	private StringProperty reqPerks;
 	private IntegerProperty currlevel;
 	private IntegerProperty maxLevel;
+	private StringProperty skillLevels;
 	
-	public PerkRec(String title, String reqPerks, int currLevel, int maxLevel) {
+	public PerkRec(int index, String title, String reqPerks, int currLevel, int maxLevel, String skillLevels) {
+		this.index = index;
 		this.title = new SimpleStringProperty(title);
 		this.reqPerks = new SimpleStringProperty(reqPerks);
 		this.currlevel = new SimpleIntegerProperty(currLevel);
 		this.maxLevel = new SimpleIntegerProperty(maxLevel);
+		this.skillLevels = new SimpleStringProperty(skillLevels);
+	}
+	
+	public int getIndex() {
+		return index;
 	}
 	
 	public String getTitle() {
@@ -49,5 +57,13 @@ public class PerkRec {
 	
 	public IntegerProperty propertyMaxLevel() {
 		return maxLevel;
+	}
+	
+	public String getSkillLevels() {
+		return skillLevels.get();
+	}
+	
+	public StringProperty propertySkillLevels() {
+		return skillLevels;
 	}
 }
