@@ -75,9 +75,11 @@ public class CharacterBuild {
 	}
 	
 	public void addAttribute(Attribute attribute) {
-		for(Attribute a : attributes) {
-			if(a == null) a = attribute;
-			break;
+		for(int i = 0; i < attributes.length; i++) {
+			if(attributes[i] == null) {
+				attributes[i] = attribute;
+				break;
+			}
 		}
 	}
 	

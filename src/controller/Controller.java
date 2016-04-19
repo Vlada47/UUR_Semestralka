@@ -137,6 +137,7 @@ public class Controller {
 	
 	public static void increaseAttribute(PrimaryAttrEnum attribute) {
 		Attribute a = new Attribute(attribute, 10);
+		characterBuild.addAttribute(a);
 		
 		if(attribute == PrimaryAttrEnum.HEALTH) {
 			characterBuild.pushLastHealth(a);
