@@ -2,7 +2,7 @@ package view;
 
 import java.util.List;
 
-import controller.Controller;
+import app.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;

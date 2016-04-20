@@ -2,6 +2,8 @@ package view;
 
 import java.util.List;
 
+import app.Main;
+import javafx.geometry.Insets;
 import javafx.scene.control.TabPane;
 import staticData.BirthsignEnum;
 import staticData.GenderEnum;
@@ -15,13 +17,19 @@ import view.recordObjects.PerkRec;
 
 public class CenterPane extends TabPane {
 	
+	private static final int MAIN_PANE_WIDTH = 750;
+	private static final int MAIN_PANE_PADDING = 10;
+	
 	private final GeneralTab generalTab;
 	private final SkillTab skillTab;
 	private final AttrDistribTab attrDistribTab;
 	
 	public CenterPane() {
 		super();
-		this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);;
+		this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+		this.setPrefWidth(MAIN_PANE_WIDTH);
+		this.setPadding(new Insets(MAIN_PANE_PADDING));
+		this.setStyle(Main.MAIN_PANE_BORDER_STYLE);
 		
 		generalTab = new GeneralTab();
 		skillTab = new SkillTab();

@@ -1,11 +1,13 @@
 package view;
 
-import controller.Controller;
+import app.Controller;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import staticData.BirthsignEnum;
@@ -17,9 +19,12 @@ import staticData.SpecializationEnum;
 
 public class GeneralTab extends Tab {
 	
+	private static final int BTTN_WIDTH = 100;
+	private static final int BTTN_HEIGHT = 25;
+	
 	private static final String TAB_LABEL = "GENERAL";
-	private static final String ATTR_BOX_LABEL = "Attributes";
-	private static final String INFO_BOX_LABEL = "Details";
+	private static final String ATTR_PANE_LABEL = "Attributes";
+	private static final String INFO_PANE_LABEL = "Details";
 	private static final String CONF_BUTT_LABEL = "Confirm";
 	private static final String RES_BUTT_LABEL = "Reset";
 	
@@ -36,89 +41,86 @@ public class GeneralTab extends Tab {
 	public GeneralTab() {
 		super();
 		this.setText(TAB_LABEL);
-		this.setContent(new HBox(new VBox(createAttributesBox(), createButtonBox()), createInfoBox()));
+		this.setContent(new HBox(createAttributesBox(), createInfoBox()));
 		this.setDisable(true);
 	}
 	
-	private VBox createAttributesBox() {
-		VBox attributesVBox = new VBox();
+	private Node createAttributesBox() {
+		GridPane attributesPane = new GridPane();
+		Label boxLabel = new Label(ATTR_PANE_LABEL);
 		
-		Label boxLabel = new Label(ATTR_BOX_LABEL);
-		
-		HBox raceBox = new HBox();
 		Label raceLabel = new Label(RaceEnum.LABEL);
 		raceComboBox = new ComboBox<>();
 		raceComboBox.getItems().setAll(RaceEnum.values());
 		raceComboBox.setValue(RaceEnum.ALTMER);
 		raceComboBox.setOnAction(event -> changeInfoAction(raceComboBox.getValue().getDescription()));
-		raceBox.getChildren().addAll(raceLabel, raceComboBox);
 		
-		HBox genderBox = new HBox();
 		Label genderLabel = new Label(GenderEnum.LABEL);
 		genderComboBox = new ComboBox<>();
 		genderComboBox.getItems().setAll(GenderEnum.values());
 		genderComboBox.setValue(GenderEnum.MALE);
 		genderComboBox.setOnAction(event -> changeInfoAction(genderComboBox.getValue().getDescription()));
-		genderBox.getChildren().addAll(genderLabel, genderComboBox);
 		
-		HBox specBox = new HBox();
 		Label specLabel = new Label(SpecializationEnum.LABEL);
 		specComboBox = new ComboBox<>();
 		specComboBox.getItems().setAll(SpecializationEnum.values());
 		specComboBox.setValue(SpecializationEnum.COMBAT);
 		specComboBox.setOnAction(event -> changeInfoAction(specComboBox.getValue().getDescription()));
-		specBox.getChildren().addAll(specLabel, specComboBox);
 		
-		HBox primAttrBox = new HBox();
 		Label primAttrLabel = new Label(PrimaryAttrEnum.LABEL);
 		primAttrComboBox = new ComboBox<>();
 		primAttrComboBox.getItems().setAll(PrimaryAttrEnum.values());
 		primAttrComboBox.setValue(PrimaryAttrEnum.HEALTH);
 		primAttrComboBox.setOnAction(event -> changeInfoAction(primAttrComboBox.getValue().getDescription()));
-		primAttrBox.getChildren().addAll(primAttrLabel, primAttrComboBox);
 		
-		HBox secAttrBox = new HBox();
 		Label secAttrLabel = new Label(SecondaryAttrEnum.LABEL);
 		secAttrComboBox = new ComboBox<>();
 		secAttrComboBox.getItems().setAll(SecondaryAttrEnum.values());
 		secAttrComboBox.setValue(SecondaryAttrEnum.STRENGTH);
 		secAttrComboBox.setOnAction(event -> changeInfoAction(secAttrComboBox.getValue().getDescription()));
-		secAttrBox.getChildren().addAll(secAttrLabel, secAttrComboBox);
 		
-		HBox birthsignBox = new HBox();
 		Label birthsignLabel = new Label(BirthsignEnum.LABEL);
 		birthsignComboBox = new ComboBox<>();
 		birthsignComboBox.getItems().setAll(BirthsignEnum.values());
 		birthsignComboBox.setValue(BirthsignEnum.APPRENTICE);
 		birthsignComboBox.setOnAction(event -> changeInfoAction(birthsignComboBox.getValue().getDescription()));
-		birthsignBox.getChildren().addAll(birthsignLabel, birthsignComboBox);
 		
-		attributesVBox.getChildren().addAll(boxLabel, raceBox, genderBox, specBox, primAttrBox, secAttrBox, birthsignBox);
+		confirmButt = new Button(CONF_BUTT_LABEL);
+		confirmButt.setOnAction(event -> confirmAction());
+		confirmButt.setPrefSize(BTTN_WIDTH, BTTN_HEIGHT);
 		
-		return attributesVBox;
+		resetButt = new Button(RES_BUTT_LABEL);
+		resetButt.setOnAction(event -> resetAction());
+		resetButt.setPrefSize(BTTN_WIDTH, BTTN_HEIGHT);
+		
+		attributesPane.add(boxLabel, 0, 0);
+		attributesPane.add(raceLabel, 0, 1);
+		attributesPane.add(raceComboBox, 1, 1);
+		attributesPane.add(genderLabel, 0, 2);
+		attributesPane.add(genderComboBox, 1, 2);
+		attributesPane.add(specLabel, 0, 3);
+		attributesPane.add(specComboBox, 1, 3);
+		attributesPane.add(primAttrLabel, 0, 4);
+		attributesPane.add(primAttrComboBox, 1, 4);
+		attributesPane.add(secAttrLabel, 0, 5);
+		attributesPane.add(secAttrComboBox, 1, 5);
+		attributesPane.add(birthsignLabel, 0, 6);
+		attributesPane.add(birthsignComboBox, 1, 6);
+		attributesPane.add(confirmButt, 0, 7);
+		attributesPane.add(resetButt, 0, 8);
+		
+		return attributesPane;
 	}
 	
-	private VBox createInfoBox() {
+	private Node createInfoBox() {
 		VBox skillBox = new VBox();
+		Label boxLabel = new Label(INFO_PANE_LABEL);
 		
-		Label boxLabel = new Label(INFO_BOX_LABEL);
 		infoArea = new TextArea("");
 		infoArea.setEditable(false);
 		skillBox.getChildren().addAll(boxLabel, infoArea);
 		
 		return skillBox;
-	}
-	
-	private VBox createButtonBox() {
-		VBox buttonBox = new VBox();
-		
-		confirmButt = new Button(CONF_BUTT_LABEL);
-		confirmButt.setOnAction(event -> confirmAction());
-		resetButt = new Button(RES_BUTT_LABEL);
-		resetButt.setOnAction(event -> resetAction());
-		buttonBox.getChildren().addAll(confirmButt, resetButt);
-		
-		return buttonBox;
 	}
 	
 	private void confirmAction() {

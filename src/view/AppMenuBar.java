@@ -1,6 +1,6 @@
 package view;
 
-import controller.Controller;
+import app.Controller;
 import javafx.application.Platform;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
