@@ -10,6 +10,8 @@ import javafx.scene.control.SeparatorMenuItem;
 
 public class AppMenuBar extends MenuBar {
 	
+	private static final int BAR_HEIGHT = 30;
+	
 	private static final String MAIN_MENU_LABEL = "Main Menu";
 	private static final String HELP_MENU_LABEL = "Help";
 	private static final String NEW_BUILD_LABEL = "New Build";
@@ -23,6 +25,7 @@ public class AppMenuBar extends MenuBar {
 	public AppMenuBar() {
 		super();
 		
+		this.setPrefHeight(BAR_HEIGHT);
 		this.getMenus().addAll(createMainMenu(),createHelpMenu());
 	}
 	

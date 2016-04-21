@@ -17,21 +17,21 @@ import staticData.PrimaryAttrEnum;
 public class LeftPane extends VBox {
 	
 	private static final int MAIN_PANE_WIDTH = 350;
-	private static final int MAIN_PANE_SPACING = 50;
+	private static final int MAIN_PANE_SPACING = 25;
 	private static final int MAIN_PANE_PADDING = 10;
 	
+	private static final int GRID_HGAP = 50;
+	private static final int GRID_VGAP = 10;
 	private static final int INFO_PANE_PADDING = 5;
 	private static final int FIELDS_WIDTH = 135;
 	private static final int FIELDS_PADDING_TOP = 5;
 	private static final int FIELDS_PADDING_RIGHT = 0;
 	private static final int FIELDS_PADDING_BOTTOM = 5;
 	private static final int FIELDS_PADDING_LEFT = 10;
-	private static final int GRID_HGAP = 50;
-	private static final int GRID_VGAP = 10;
 	
 	private static final int EXTENSION_PADDING = 5;
 	private static final int EXTENSION_SPACING = 20;
-	private static final int NOTES_ROW_CNT = 20;
+	private static final int NOTES_ROW_CNT = 12;
 	private static final int SAVE_BTTN_WIDTH = 150;
 	private static final int SAVE_BTTN_HEIGHT = 35;
 	

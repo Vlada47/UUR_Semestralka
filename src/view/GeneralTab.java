@@ -1,6 +1,7 @@
 package view;
 
 import app.Controller;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -19,8 +20,14 @@ import staticData.SpecializationEnum;
 
 public class GeneralTab extends Tab {
 	
-	private static final int BTTN_WIDTH = 100;
-	private static final int BTTN_HEIGHT = 25;
+	private static final int COMPONENT_PADDING = 10;
+	
+	private static final int GRID_HGAP = 50;
+	private static final int GRID_VGAP = 10;
+	private static final int COMBO_BOX_WIDTH = 150;
+	private static final int BTTN_WIDTH = 150;
+	private static final int BTTN_HEIGHT = 35;
+	
 	
 	private static final String TAB_LABEL = "GENERAL";
 	private static final String ATTR_PANE_LABEL = "Attributes";
@@ -41,46 +48,56 @@ public class GeneralTab extends Tab {
 	public GeneralTab() {
 		super();
 		this.setText(TAB_LABEL);
-		this.setContent(new HBox(createAttributesBox(), createInfoBox()));
+		this.setContent(new HBox(createAttributesPane(), createInfoBox()));
 		this.setDisable(true);
 	}
 	
-	private Node createAttributesBox() {
+	private Node createAttributesPane() {
 		GridPane attributesPane = new GridPane();
+		attributesPane.setPadding(new Insets(COMPONENT_PADDING));
+		attributesPane.setHgap(GRID_HGAP);
+		attributesPane.setVgap(GRID_VGAP);
+		
 		Label boxLabel = new Label(ATTR_PANE_LABEL);
 		
 		Label raceLabel = new Label(RaceEnum.LABEL);
 		raceComboBox = new ComboBox<>();
+		raceComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		raceComboBox.getItems().setAll(RaceEnum.values());
 		raceComboBox.setValue(RaceEnum.ALTMER);
 		raceComboBox.setOnAction(event -> changeInfoAction(raceComboBox.getValue().getDescription()));
 		
 		Label genderLabel = new Label(GenderEnum.LABEL);
 		genderComboBox = new ComboBox<>();
+		genderComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		genderComboBox.getItems().setAll(GenderEnum.values());
 		genderComboBox.setValue(GenderEnum.MALE);
 		genderComboBox.setOnAction(event -> changeInfoAction(genderComboBox.getValue().getDescription()));
 		
 		Label specLabel = new Label(SpecializationEnum.LABEL);
 		specComboBox = new ComboBox<>();
+		specComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		specComboBox.getItems().setAll(SpecializationEnum.values());
 		specComboBox.setValue(SpecializationEnum.COMBAT);
 		specComboBox.setOnAction(event -> changeInfoAction(specComboBox.getValue().getDescription()));
 		
 		Label primAttrLabel = new Label(PrimaryAttrEnum.LABEL);
 		primAttrComboBox = new ComboBox<>();
+		primAttrComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		primAttrComboBox.getItems().setAll(PrimaryAttrEnum.values());
 		primAttrComboBox.setValue(PrimaryAttrEnum.HEALTH);
 		primAttrComboBox.setOnAction(event -> changeInfoAction(primAttrComboBox.getValue().getDescription()));
 		
 		Label secAttrLabel = new Label(SecondaryAttrEnum.LABEL);
 		secAttrComboBox = new ComboBox<>();
+		secAttrComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		secAttrComboBox.getItems().setAll(SecondaryAttrEnum.values());
 		secAttrComboBox.setValue(SecondaryAttrEnum.STRENGTH);
 		secAttrComboBox.setOnAction(event -> changeInfoAction(secAttrComboBox.getValue().getDescription()));
 		
 		Label birthsignLabel = new Label(BirthsignEnum.LABEL);
 		birthsignComboBox = new ComboBox<>();
+		birthsignComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		birthsignComboBox.getItems().setAll(BirthsignEnum.values());
 		birthsignComboBox.setValue(BirthsignEnum.APPRENTICE);
 		birthsignComboBox.setOnAction(event -> changeInfoAction(birthsignComboBox.getValue().getDescription()));
@@ -114,6 +131,8 @@ public class GeneralTab extends Tab {
 	
 	private Node createInfoBox() {
 		VBox skillBox = new VBox();
+		skillBox.setPadding(new Insets(COMPONENT_PADDING));
+		
 		Label boxLabel = new Label(INFO_PANE_LABEL);
 		
 		infoArea = new TextArea("");

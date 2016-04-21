@@ -24,10 +24,10 @@ public class Main extends Application {
 	private static final String APP_TITLE = "Skyrim Perkus Maximus Character Calculator";
 	
 	private static final int STAGE_MIN_WIDTH = 1280;
-	private static final int STAGE_MIN_HEIGHT = 720;
+	private static final int STAGE_MIN_HEIGHT = 600;
 	
 	private static final int NODE_MARGIN_VERTICAL = 10;
-	private static final int NODE_MARGIN_HORIZONTAL = 20;
+	private static final int NODE_MARGIN_HORIZONTAL = 10;
 	
 	private AppMenuBar appMenuBar;
 	private LeftPane leftPane;
