@@ -1,8 +1,12 @@
 package model;
 
+import java.io.Serializable;
+
 import staticData.PrimaryAttrEnum;
 
-public class Attribute {
+public class Attribute implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private PrimaryAttrEnum attribute;
 	private int gain;

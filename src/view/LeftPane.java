@@ -23,7 +23,7 @@ public class LeftPane extends VBox {
 	private static final int GRID_HGAP = 50;
 	private static final int GRID_VGAP = 10;
 	private static final int INFO_PANE_PADDING = 5;
-	private static final int FIELDS_WIDTH = 135;
+	private static final int FIELDS_WIDTH = 100;
 	private static final int FIELDS_PADDING_TOP = 5;
 	private static final int FIELDS_PADDING_RIGHT = 0;
 	private static final int FIELDS_PADDING_BOTTOM = 5;
@@ -64,45 +64,55 @@ public class LeftPane extends VBox {
 		generalInfoPane.setPadding(new Insets(INFO_PANE_PADDING));
 		generalInfoPane.setStyle(Main.INNER_PANE_BORDER_STYLE);
 		
+		Label levelLabel = new Label(LEVEL_LABEL);
+		levelLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
 		levelValueField = new TextField("1");
 		levelValueField.setEditable(false);
 		levelValueField.setDisable(true);
 		levelValueField.setPrefWidth(FIELDS_WIDTH);
 		levelValueField.setPadding(new Insets(FIELDS_PADDING_TOP, FIELDS_PADDING_RIGHT, FIELDS_PADDING_BOTTOM, FIELDS_PADDING_LEFT));
 		
+		Label perksLabel = new Label(PERK_LABEL);
+		perksLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
 		perksValueField = new TextField("0");
 		perksValueField.setEditable(false);
 		perksValueField.setDisable(true);
 		perksValueField.setPrefWidth(FIELDS_WIDTH);
 		perksValueField.setPadding(new Insets(FIELDS_PADDING_TOP, FIELDS_PADDING_RIGHT, FIELDS_PADDING_BOTTOM, FIELDS_PADDING_LEFT));
 		
+		Label healthLabel = new Label(PrimaryAttrEnum.HEALTH.getLabel()+":");
+		healthLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
 		healthValueField = new TextField(Integer.toString(BuildConstants.ATTRIBUTE_BASE));
 		healthValueField.setEditable(false);
 		healthValueField.setDisable(true);
 		healthValueField.setPrefWidth(FIELDS_WIDTH);
 		healthValueField.setPadding(new Insets(FIELDS_PADDING_TOP, FIELDS_PADDING_RIGHT, FIELDS_PADDING_BOTTOM, FIELDS_PADDING_LEFT));
 		
+		Label magickaLabel = new Label(PrimaryAttrEnum.MAGICKA.getLabel()+":");
+		magickaLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
 		magickaValueField = new TextField(Integer.toString(BuildConstants.ATTRIBUTE_BASE));
 		magickaValueField.setEditable(false);
 		magickaValueField.setDisable(true);
 		magickaValueField.setPrefWidth(FIELDS_WIDTH);
 		magickaValueField.setPadding(new Insets(FIELDS_PADDING_TOP, FIELDS_PADDING_RIGHT, FIELDS_PADDING_BOTTOM, FIELDS_PADDING_LEFT));
 		
+		Label staminaLabel = new Label(PrimaryAttrEnum.STAMINA.getLabel()+":");
+		staminaLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
 		staminaValueField = new TextField(Integer.toString(BuildConstants.ATTRIBUTE_BASE));
 		staminaValueField.setEditable(false);
 		staminaValueField.setDisable(true);
 		staminaValueField.setPrefWidth(FIELDS_WIDTH);
 		staminaValueField.setPadding(new Insets(FIELDS_PADDING_TOP, FIELDS_PADDING_RIGHT, FIELDS_PADDING_BOTTOM, FIELDS_PADDING_LEFT));
 		
-		generalInfoPane.add(new Label(LEVEL_LABEL), 0, 0);
+		generalInfoPane.add(levelLabel, 0, 0);
 		generalInfoPane.add(levelValueField, 1, 0);
-		generalInfoPane.add(new Label(PERK_LABEL), 0, 1);
+		generalInfoPane.add(perksLabel, 0, 1);
 		generalInfoPane.add(perksValueField, 1, 1);
-		generalInfoPane.add(new Label(PrimaryAttrEnum.HEALTH.getLabel()), 0, 2);
+		generalInfoPane.add(healthLabel, 0, 2);
 		generalInfoPane.add(healthValueField, 1, 2);
-		generalInfoPane.add(new Label(PrimaryAttrEnum.MAGICKA.getLabel()), 0, 3);
+		generalInfoPane.add(magickaLabel, 0, 3);
 		generalInfoPane.add(magickaValueField, 1, 3);
-		generalInfoPane.add(new Label(PrimaryAttrEnum.STAMINA.getLabel()), 0, 4);
+		generalInfoPane.add(staminaLabel, 0, 4);
 		generalInfoPane.add(staminaValueField, 1, 4);
 		return generalInfoPane;
 	}
@@ -119,6 +129,7 @@ public class LeftPane extends VBox {
 		notesArea.setPrefRowCount(NOTES_ROW_CNT);
 		
 		saveNotesBttn = new Button(NOTES_BTTN_TEXT);
+		saveNotesBttn.setStyle(Main.BUTTON_LABEL_STYLE);
 		saveNotesBttn.setOnAction(event -> Controller.saveBuildNotes(notesArea.getText()));
 		saveNotesBttn.setDisable(true);
 		saveNotesBttn.setPrefSize(SAVE_BTTN_WIDTH, SAVE_BTTN_HEIGHT);

@@ -1,6 +1,7 @@
 package view;
 
 import app.Controller;
+import app.Main;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -28,9 +29,10 @@ public class GeneralTab extends Tab {
 	private static final int BTTN_WIDTH = 150;
 	private static final int BTTN_HEIGHT = 35;
 	
+	private static final int DETAIL_BOX_SPACING = 20;
 	
 	private static final String TAB_LABEL = "GENERAL";
-	private static final String ATTR_PANE_LABEL = "Attributes";
+	private static final String PROP_PANE_LABEL = "Properties";
 	private static final String INFO_PANE_LABEL = "Details";
 	private static final String CONF_BUTT_LABEL = "Confirm";
 	private static final String RES_BUTT_LABEL = "Reset";
@@ -48,19 +50,21 @@ public class GeneralTab extends Tab {
 	public GeneralTab() {
 		super();
 		this.setText(TAB_LABEL);
-		this.setContent(new HBox(createAttributesPane(), createInfoBox()));
+		this.setContent(new HBox(createPropertiesPane(), createInfoBox()));
 		this.setDisable(true);
 	}
 	
-	private Node createAttributesPane() {
-		GridPane attributesPane = new GridPane();
-		attributesPane.setPadding(new Insets(COMPONENT_PADDING));
-		attributesPane.setHgap(GRID_HGAP);
-		attributesPane.setVgap(GRID_VGAP);
+	private Node createPropertiesPane() {
+		GridPane propertiesPane = new GridPane();
+		propertiesPane.setPadding(new Insets(COMPONENT_PADDING));
+		propertiesPane.setHgap(GRID_HGAP);
+		propertiesPane.setVgap(GRID_VGAP);
 		
-		Label boxLabel = new Label(ATTR_PANE_LABEL);
+		Label mainLabel = new Label(PROP_PANE_LABEL);
+		mainLabel.setStyle(Main.PRIMARY_LABEL_STYLE);
 		
 		Label raceLabel = new Label(RaceEnum.LABEL);
+		raceLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
 		raceComboBox = new ComboBox<>();
 		raceComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		raceComboBox.getItems().setAll(RaceEnum.values());
@@ -68,6 +72,7 @@ public class GeneralTab extends Tab {
 		raceComboBox.setOnAction(event -> changeInfoAction(raceComboBox.getValue().getDescription()));
 		
 		Label genderLabel = new Label(GenderEnum.LABEL);
+		genderLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
 		genderComboBox = new ComboBox<>();
 		genderComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		genderComboBox.getItems().setAll(GenderEnum.values());
@@ -75,6 +80,7 @@ public class GeneralTab extends Tab {
 		genderComboBox.setOnAction(event -> changeInfoAction(genderComboBox.getValue().getDescription()));
 		
 		Label specLabel = new Label(SpecializationEnum.LABEL);
+		specLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
 		specComboBox = new ComboBox<>();
 		specComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		specComboBox.getItems().setAll(SpecializationEnum.values());
@@ -82,6 +88,7 @@ public class GeneralTab extends Tab {
 		specComboBox.setOnAction(event -> changeInfoAction(specComboBox.getValue().getDescription()));
 		
 		Label primAttrLabel = new Label(PrimaryAttrEnum.LABEL);
+		primAttrLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
 		primAttrComboBox = new ComboBox<>();
 		primAttrComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		primAttrComboBox.getItems().setAll(PrimaryAttrEnum.values());
@@ -89,6 +96,7 @@ public class GeneralTab extends Tab {
 		primAttrComboBox.setOnAction(event -> changeInfoAction(primAttrComboBox.getValue().getDescription()));
 		
 		Label secAttrLabel = new Label(SecondaryAttrEnum.LABEL);
+		secAttrLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
 		secAttrComboBox = new ComboBox<>();
 		secAttrComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		secAttrComboBox.getItems().setAll(SecondaryAttrEnum.values());
@@ -96,6 +104,7 @@ public class GeneralTab extends Tab {
 		secAttrComboBox.setOnAction(event -> changeInfoAction(secAttrComboBox.getValue().getDescription()));
 		
 		Label birthsignLabel = new Label(BirthsignEnum.LABEL);
+		birthsignLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
 		birthsignComboBox = new ComboBox<>();
 		birthsignComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		birthsignComboBox.getItems().setAll(BirthsignEnum.values());
@@ -103,43 +112,47 @@ public class GeneralTab extends Tab {
 		birthsignComboBox.setOnAction(event -> changeInfoAction(birthsignComboBox.getValue().getDescription()));
 		
 		confirmButt = new Button(CONF_BUTT_LABEL);
+		confirmButt.setStyle(Main.BUTTON_LABEL_STYLE);
 		confirmButt.setOnAction(event -> confirmAction());
 		confirmButt.setPrefSize(BTTN_WIDTH, BTTN_HEIGHT);
 		
 		resetButt = new Button(RES_BUTT_LABEL);
+		resetButt.setStyle(Main.BUTTON_LABEL_STYLE);
 		resetButt.setOnAction(event -> resetAction());
 		resetButt.setPrefSize(BTTN_WIDTH, BTTN_HEIGHT);
 		
-		attributesPane.add(boxLabel, 0, 0);
-		attributesPane.add(raceLabel, 0, 1);
-		attributesPane.add(raceComboBox, 1, 1);
-		attributesPane.add(genderLabel, 0, 2);
-		attributesPane.add(genderComboBox, 1, 2);
-		attributesPane.add(specLabel, 0, 3);
-		attributesPane.add(specComboBox, 1, 3);
-		attributesPane.add(primAttrLabel, 0, 4);
-		attributesPane.add(primAttrComboBox, 1, 4);
-		attributesPane.add(secAttrLabel, 0, 5);
-		attributesPane.add(secAttrComboBox, 1, 5);
-		attributesPane.add(birthsignLabel, 0, 6);
-		attributesPane.add(birthsignComboBox, 1, 6);
-		attributesPane.add(confirmButt, 0, 7);
-		attributesPane.add(resetButt, 0, 8);
+		propertiesPane.add(mainLabel, 0, 0);
+		propertiesPane.add(raceLabel, 0, 1);
+		propertiesPane.add(raceComboBox, 1, 1);
+		propertiesPane.add(genderLabel, 0, 2);
+		propertiesPane.add(genderComboBox, 1, 2);
+		propertiesPane.add(specLabel, 0, 3);
+		propertiesPane.add(specComboBox, 1, 3);
+		propertiesPane.add(primAttrLabel, 0, 4);
+		propertiesPane.add(primAttrComboBox, 1, 4);
+		propertiesPane.add(secAttrLabel, 0, 5);
+		propertiesPane.add(secAttrComboBox, 1, 5);
+		propertiesPane.add(birthsignLabel, 0, 6);
+		propertiesPane.add(birthsignComboBox, 1, 6);
+		propertiesPane.add(confirmButt, 0, 7);
+		propertiesPane.add(resetButt, 0, 8);
 		
-		return attributesPane;
+		return propertiesPane;
 	}
 	
 	private Node createInfoBox() {
-		VBox skillBox = new VBox();
-		skillBox.setPadding(new Insets(COMPONENT_PADDING));
+		VBox infoBox = new VBox();
+		infoBox.setPadding(new Insets(COMPONENT_PADDING));
+		infoBox.setSpacing(DETAIL_BOX_SPACING);
 		
-		Label boxLabel = new Label(INFO_PANE_LABEL);
+		Label detailLabel = new Label(INFO_PANE_LABEL);
+		detailLabel.setStyle(Main.PRIMARY_LABEL_STYLE);
 		
 		infoArea = new TextArea("");
 		infoArea.setEditable(false);
-		skillBox.getChildren().addAll(boxLabel, infoArea);
+		infoBox.getChildren().addAll(detailLabel, infoArea);
 		
-		return skillBox;
+		return infoBox;
 	}
 	
 	private void confirmAction() {

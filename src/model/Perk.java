@@ -1,6 +1,10 @@
 package model;
 
-public class Perk {
+import java.io.Serializable;
+
+public class Perk implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	private final String label;
 	private final int maxLevel;

@@ -32,8 +32,13 @@ public class CenterPane extends TabPane {
 		this.setStyle(Main.MAIN_PANE_BORDER_STYLE);
 		
 		generalTab = new GeneralTab();
+		generalTab.setStyle(Main.TAB_LABEL_STYLE);
+		
 		skillTab = new SkillTab();
+		skillTab.setStyle(Main.TAB_LABEL_STYLE);
+		
 		attrDistribTab = new AttrDistribTab();
+		attrDistribTab.setStyle(Main.TAB_LABEL_STYLE);
 		
 		this.getTabs().addAll(generalTab, skillTab, attrDistribTab);
 	}

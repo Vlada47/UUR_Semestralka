@@ -1,10 +1,14 @@
 package model;
 
+import java.io.Serializable;
+
 import staticData.BuildConstants;
 import staticData.SkillEnum;
 
-public class Skill {
+public class Skill implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	private final SkillEnum skillInstance;
 	
 	private Perk[] perks;

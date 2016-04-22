@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Stack;
 
 import staticData.BirthsignEnum;
@@ -10,7 +11,9 @@ import staticData.RaceEnum;
 import staticData.SecondaryAttrEnum;
 import staticData.SpecializationEnum;
 
-public class CharacterBuild {
+public class CharacterBuild implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private final Skill[] skills;
 	private final Attribute[] attributes;
@@ -27,6 +30,7 @@ public class CharacterBuild {
 	private SecondaryAttrEnum secondaryAttribute;
 	private BirthsignEnum birthsign;
 	
+	private boolean buildSet;
 	private int currentLevel;
 	private double currentXP;
 	private int perksAvailable;
@@ -52,6 +56,7 @@ public class CharacterBuild {
 		secondaryAttribute = SecondaryAttrEnum.STRENGTH;
 		birthsign = BirthsignEnum.APPRENTICE;
 		
+		this.buildSet = false;
 		this.currentLevel = 1;
 		this.perksAvailable = 0;
 		this.currentHealth = BuildConstants.ATTRIBUTE_BASE;
@@ -109,6 +114,14 @@ public class CharacterBuild {
 	
 	public Stack<Attribute> getLastStamina() {
 		return lastStamina;
+	}
+	
+	public boolean isBuildSet() {
+		return buildSet;
+	}
+
+	public void setBuildSet(boolean buildSet) {
+		this.buildSet = buildSet;
 	}
 	
 	public void setCurrentLevel(int level) {

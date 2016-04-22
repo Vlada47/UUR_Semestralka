@@ -1,5 +1,11 @@
 package app;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -60,9 +66,45 @@ public class Controller {
 		return warningStatus;
 	}
 	
-	public static void loadBuild(CharacterBuild charBuild) {
-		characterBuild = null;
-		characterBuild = charBuild;
+	public static boolean saveBuild(File file) {
+		boolean success = false;
+		
+		if(characterBuild != null) {
+			try {
+				FileOutputStream fos = new FileOutputStream(file);
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				
+				oos.writeObject(characterBuild);
+				oos.close();
+				fos.close();
+				success = true;
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+		}
+		
+		return success;
+	}
+	
+	public static boolean loadBuild(File file) {
+		boolean success = false;
+		
+		try{
+			FileInputStream fis = new FileInputStream(file);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			
+			characterBuild = (CharacterBuild) ois.readObject();
+			ois.close();
+			fis.close();
+			success = true;
+			displayStatus();
+		} catch(IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return success;
 	}
 	
 	public static void createCharacter() {
@@ -125,6 +167,8 @@ public class Controller {
 				int targetLevel = skills[i].getCurrentLevel() + BuildConstants.SKILL_MODIFIERS[race.getId()][skills[i].getSkillInstance().getId()];
 				skills[i].setStartingLevel(targetLevel);
 			}
+			
+			characterBuild.setBuildSet(true);
 		}
 		
 		displayStatus();

@@ -1,5 +1,7 @@
 package view;
 
+import java.io.File;
+
 import app.Controller;
 import javafx.application.Platform;
 import javafx.scene.control.CheckMenuItem;
@@ -7,6 +9,8 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class AppMenuBar extends MenuBar {
 	
@@ -22,6 +26,9 @@ public class AppMenuBar extends MenuBar {
 	private static final String ABOUT_LABEL = "About application";
 	private static final String MANUAL_LABEL = "Usage manual";
 	
+	private static final String SAVE_BUILD_TEXT = "Save build to file";
+	private static final String LOAD_BUILD_TEXT = "Load build from file";
+	
 	public AppMenuBar() {
 		super();
 		
@@ -36,10 +43,10 @@ public class AppMenuBar extends MenuBar {
 		newBuildItem.setOnAction(event -> newBuildAction());
 		
 		MenuItem saveBuildItem = new MenuItem(SAVE_BUILD_LABEL);
-		saveBuildItem.setOnAction(null);
+		saveBuildItem.setOnAction(event -> saveBuildAction());
 		
 		MenuItem loadBuildItem = new MenuItem(LOAD_BUILD_LABEL);
-		loadBuildItem.setOnAction(null);
+		loadBuildItem.setOnAction(event -> loadBuildAction());
 		
 		CheckMenuItem warningModeItem = new CheckMenuItem(WARNING_MODE_LABEL);
 		warningModeItem.setSelected(Controller.getWarningStatus());
@@ -67,6 +74,42 @@ public class AppMenuBar extends MenuBar {
 		return menu;
 	}
 	
+	private void newBuildAction() {
+		Controller.createCharacter();
+		Controller.setInfoFieldsDisable(false);
+		Controller.setBuildNotesDisable(false);
+		Controller.setGeneralTabDisable(false);
+	}
+	
+	private void saveBuildAction() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle(SAVE_BUILD_TEXT);
+		
+		File file = fileChooser.showSaveDialog(new Stage());
+		
+		if(Controller.saveBuild(file)) {
+			
+		}
+		else {
+			
+		}
+	}
+	
+	private void loadBuildAction() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle(LOAD_BUILD_TEXT);
+		
+		File file = fileChooser.showOpenDialog(new Stage());
+		
+		
+		if(Controller.loadBuild(file)) {
+			
+		}
+		else {
+			
+		}
+	}
+	
 	private void quitApp() {
 		Platform.exit();
 	}
@@ -77,12 +120,5 @@ public class AppMenuBar extends MenuBar {
 	
 	private void showManual() {
 		HelpWindow.getInstance(HelpWindow.MANUAL_WINDOW);
-	}
-	
-	private void newBuildAction() {
-		Controller.createCharacter();
-		Controller.setInfoFieldsDisable(false);
-		Controller.setBuildNotesDisable(false);
-		Controller.setGeneralTabDisable(false);
 	}
 }

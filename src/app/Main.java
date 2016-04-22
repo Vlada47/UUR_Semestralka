@@ -21,6 +21,15 @@ public class Main extends Application {
 														+ "-fx-border-radius: 5;"
 														+ "-fx-border-color: black";
 	
+	public static final String TAB_LABEL_STYLE = "-fx-font-size: 14pt;"
+												+ "-fx-font-style: italic;";	
+	public static final String PRIMARY_LABEL_STYLE = "-fx-font-size: 16pt;"
+													+ "-fx-font-style: oblique;";
+	public static final String SECONDARY_LABEL_STYLE = "-fx-font-size: 12pt;"
+													+ "-fx-font-style: oblique;";
+	public static final String BUTTON_LABEL_STYLE = "-fx-font-size: 12pt;"
+													+ "-fx-font-weight: bold;";
+	
 	private static final String APP_TITLE = "Skyrim Perkus Maximus Character Calculator";
 	
 	private static final int STAGE_MIN_WIDTH = 1280;

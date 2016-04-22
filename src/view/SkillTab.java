@@ -3,6 +3,7 @@ package view;
 import java.util.List;
 
 import app.Controller;
+import app.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -75,6 +76,7 @@ public class SkillTab extends Tab {
 		tableBox.setSpacing(TABLE_BOX_SPACING);
 		
 		skillLabel = new Label(DEF_SKILL_TITLE);
+		skillLabel.setStyle(Main.PRIMARY_LABEL_STYLE);
 		
 		levelField = new TextField(Integer.toString(BuildConstants.MIN_SKILL_LEVEL));
 		levelField.setEditable(false);
@@ -137,14 +139,17 @@ public class SkillTab extends Tab {
 		
 		Button levelPlusButt = new Button(BUTT_PLUS);
 		levelPlusButt.setPrefSize(SKILL_LEVEL_BTTN_SIZE, SKILL_LEVEL_BTTN_SIZE);
+		levelPlusButt.setStyle(Main.BUTTON_LABEL_STYLE);
 		levelPlusButt.setOnAction(event -> Controller.takeSkillLevel());
 		
 		Button levelMinusButt = new Button(BUTT_MINUS);
 		levelMinusButt.setPrefSize(SKILL_LEVEL_BTTN_SIZE, SKILL_LEVEL_BTTN_SIZE);
+		levelMinusButt.setStyle(Main.BUTTON_LABEL_STYLE);
 		levelMinusButt.setOnAction(event -> Controller.removeSkillLevel());
 		
 		Button skillResetButt = new Button(RES_BUTT_LABEL);
 		skillResetButt.setPrefSize(SKILL_RESET_BTTN_WIDTH, SKILL_RESET_BTTN_HEIGHT);
+		skillResetButt.setStyle(Main.BUTTON_LABEL_STYLE);
 		skillResetButt.setOnAction(event -> Controller.resetSkill());
 		
 		buttonPane.add(skillBox, 0, 0, 2, 1);
