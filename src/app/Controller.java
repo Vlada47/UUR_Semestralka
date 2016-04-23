@@ -273,16 +273,19 @@ public class Controller {
 		else {
 			int currentCharacterLevel = characterBuild.getCurrentLevel();
 			int currentSkillLevel = characterBuild.getSkills()[currentSkill.getId()].getCurrentLevel();
-			double currentXP = characterBuild.getCurrentXP();
+			double levelUpXP = getLevelUpXP(currentCharacterLevel);
 			double gainXP =  getXPGain(currentSkillLevel, BuildConstants.SKILL_XP_MULTS[currentSkill.getId()]);
+			double currentXP = characterBuild.getCurrentXP() + gainXP;
 			
-			characterBuild.setCurrentXP(currentXP + gainXP);
-			
-			if(currentXP >= getLevelUpXP(currentCharacterLevel)) {
+			if(currentXP >= levelUpXP) {
+				characterBuild.setCurrentXP(0);
 				int perksAvailable = characterBuild.getPerksAvailable();
 				int perksGain = characterBuild.getPerkCntAtLevelUp()[currentCharacterLevel];
 				characterBuild.setCurrentLevel(currentCharacterLevel + 1);
 				characterBuild.setPerksAvailable(perksAvailable + perksGain);
+			}
+			else {
+				characterBuild.setCurrentXP(currentXP);
 			}
 		}
 		
@@ -299,43 +302,17 @@ public class Controller {
 					"Skill is either on the minimal level for your character or some perk(s) requires this level.");
 		}
 		else {
-			int currentCharacterLevel = characterBuild.getCurrentLevel();
-			int currentSkillLevel = characterBuild.getSkills()[currentSkill.getId()].getCurrentLevel();
-			double currentXP = characterBuild.getCurrentXP();
-			double gainXP =  getXPGain(currentSkillLevel, BuildConstants.SKILL_XP_MULTS[currentSkill.getId()]);
-			
-			characterBuild.setCurrentXP(currentXP - gainXP);
-			
-			if(currentXP < getLevelUpXP(currentCharacterLevel - 1)) {
-				int perksAvailable = characterBuild.getPerksAvailable();
-				int perksGain = characterBuild.getPerkCntAtLevelUp()[currentCharacterLevel];
-				characterBuild.setCurrentLevel(currentCharacterLevel - 1);
-				characterBuild.setPerksAvailable(perksAvailable - perksGain);
-			}
+			//to-do: removing gained character levels and perk points
 		}
 		
 		displayStatus();
 	}
 	
 	public static void resetSkill() {
-		while(characterBuild.getSkills()[currentSkill.getId()].removeLevel()) {
-			int currentCharacterLevel = characterBuild.getCurrentLevel();
-			int currentSkillLevel = characterBuild.getSkills()[currentSkill.getId()].getCurrentLevel();
-			double currentXP = characterBuild.getCurrentXP();
-			double gainXP =  getXPGain(currentSkillLevel, BuildConstants.SKILL_XP_MULTS[currentSkill.getId()]);
-			
-			characterBuild.setCurrentXP(currentXP - gainXP);
-			
-			if(currentXP < getLevelUpXP(currentCharacterLevel - 1)) {
-				int perksAvailable = characterBuild.getPerksAvailable();
-				System.out.println(currentCharacterLevel);
-				int perksGain = characterBuild.getPerkCntAtLevelUp()[currentCharacterLevel];
-				characterBuild.setCurrentLevel(currentCharacterLevel - 1);
-				characterBuild.setPerksAvailable(perksAvailable - perksGain);
-			}
-		}
-		
 		characterBuild.getSkills()[currentSkill.getId()].resetSkill();
+		
+		//to-do: removing gained character levels and perk points
+		
 		displayStatus();
 	}
 	
