@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javafx.scene.control.Alert.AlertType;
 import model.Attribute;
 import model.CharacterBuild;
 import model.Perk;
@@ -29,6 +30,7 @@ import view.recordObjects.AttributeRec;
 import view.recordObjects.PerkRec;
 
 public class Controller {
+	
 	private static LeftPane leftPane;
 	private static CenterPane centerPane;
 	
@@ -51,6 +53,10 @@ public class Controller {
 	
 	public static void setGeneralTabDisable(boolean disable) {
 		centerPane.setGeneralTabDisable(disable);
+	}
+	
+	public static void setGeneralTabControlDisable(boolean disable) {
+		centerPane.setGeneralTabControlDisable(disable);
 	}
 	
 	public static void setDevelopmentTabsDisable(boolean disable) {
@@ -98,6 +104,19 @@ public class Controller {
 			fis.close();
 			success = true;
 			displayStatus();
+			
+			setInfoFieldsDisable(false);
+			setBuildNotesDisable(false);
+			setGeneralTabDisable(false);
+			if(characterBuild.isBuildSet()) {
+				setGeneralTabControlDisable(true);
+				setDevelopmentTabsDisable(false);
+			}
+			else {
+				setGeneralTabControlDisable(false);
+				setDevelopmentTabsDisable(true);
+			}
+			
 		} catch(IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -108,18 +127,16 @@ public class Controller {
 	}
 	
 	public static void createCharacter() {
-		characterBuild = null;
-		
-		Skill[] skills = new Skill[BuildConstants.SKILLS_COUNT];
-		
-		for(SkillEnum skill : SkillEnum.values()) {
-			skills[skill.getId()] = new Skill(skill);
-		}
-		
-		characterBuild = new CharacterBuild(skills);
-		createCharacterPerks(skills);
-		createPerkCntLevelUps();
-		createAttrGainsLevelUps();
+			Skill[] skills = new Skill[BuildConstants.SKILLS_COUNT];
+			
+			for(SkillEnum skill : SkillEnum.values()) {
+				skills[skill.getId()] = new Skill(skill);
+			}
+			
+			characterBuild = new CharacterBuild(skills);
+			createCharacterPerks(skills);
+			createPerkCntLevelUps();
+			createAttrGainsLevelUps();
 	}
 	
 	private static void createCharacterPerks(Skill[] skills) {
@@ -180,23 +197,37 @@ public class Controller {
 	}
 	
 	public static void increaseAttribute(PrimaryAttrEnum attribute) {
-		Attribute a = new Attribute(attribute, 10);
-		characterBuild.addAttribute(a);
+		int attrLevel = characterBuild.getLastHealth().size()+characterBuild.getLastMagicka().size()+characterBuild.getLastStamina().size() + 2;
 		
-		if(attribute == PrimaryAttrEnum.HEALTH) {
-			characterBuild.pushLastHealth(a);
-			characterBuild.setCurrentHealth(characterBuild.getCurrentHealth() + 10);
+		if(attrLevel <= characterBuild.getCurrentLevel()) {
+			int attrGain = characterBuild.getAttributeGainAtLevelUp()[attrLevel];
+			
+			Attribute a = new Attribute(attribute, attrGain);
+			characterBuild.addAttribute(a);
+			
+			if(attribute == PrimaryAttrEnum.HEALTH) {
+				characterBuild.pushLastHealth(a);
+				characterBuild.setCurrentHealth(characterBuild.getCurrentHealth() + attrGain);
+			}
+			else if(attribute == PrimaryAttrEnum.MAGICKA) {
+				characterBuild.pushLastMagicka(a);
+				characterBuild.setCurrentMagicka(characterBuild.getCurrentMagicka() + attrGain);
+			}
+			else if(attribute == PrimaryAttrEnum.STAMINA) {
+				characterBuild.pushLastStamina(a);
+				characterBuild.setCurrentStamina(characterBuild.getCurrentStamina() + attrGain);
+			}
+			
+			displayStatus();
 		}
-		else if(attribute == PrimaryAttrEnum.MAGICKA) {
-			characterBuild.pushLastMagicka(a);
-			characterBuild.setCurrentMagicka(characterBuild.getCurrentMagicka() + 10);
+		else {
+			if(warningStatus) {
+				Main.displayAlert(AlertType.INFORMATION, 
+						"Attribute increase alert", 
+						"Character level too low:", 
+						"You have to aquire more character levels to increase the attribute.");
+			}
 		}
-		else if(attribute == PrimaryAttrEnum.STAMINA) {
-			characterBuild.pushLastStamina(a);
-			characterBuild.setCurrentStamina(characterBuild.getCurrentStamina() + 10);
-		}
-		
-		displayStatus();
 	}
 	
 	public static void decreaseAttribute(PrimaryAttrEnum attribute) {
@@ -234,13 +265,24 @@ public class Controller {
 		boolean result = characterBuild.getSkills()[currentSkill.getId()].takeLevel();
 		
 		if(!result && warningStatus) {
-			
+			Main.displayAlert(AlertType.INFORMATION, 
+					"Skill level increase alert", 
+					"Maximum skill level reached:", 
+					"You can't increase the skill level over "+BuildConstants.MAX_SKILL_LEVEL+".");
 		}
 		else {
-			characterBuild.setCurrentXP(characterBuild.getCurrentXP() + getXPGain(characterBuild.getSkills()[currentSkill.getId()].getCurrentLevel(), BuildConstants.SKILL_XP_MULTS[currentSkill.getId()]));
-			if(characterBuild.getCurrentXP() >= getLevelUpXP(characterBuild.getCurrentLevel())) {
-				characterBuild.setCurrentLevel(characterBuild.getCurrentLevel()+1);
-				characterBuild.setPerksAvailable(characterBuild.getPerksAvailable() + characterBuild.getPerkCntAtLevelUp()[characterBuild.getCurrentLevel()]);
+			int currentCharacterLevel = characterBuild.getCurrentLevel();
+			int currentSkillLevel = characterBuild.getSkills()[currentSkill.getId()].getCurrentLevel();
+			double currentXP = characterBuild.getCurrentXP();
+			double gainXP =  getXPGain(currentSkillLevel, BuildConstants.SKILL_XP_MULTS[currentSkill.getId()]);
+			
+			characterBuild.setCurrentXP(currentXP + gainXP);
+			
+			if(currentXP >= getLevelUpXP(currentCharacterLevel)) {
+				int perksAvailable = characterBuild.getPerksAvailable();
+				int perksGain = characterBuild.getPerkCntAtLevelUp()[currentCharacterLevel];
+				characterBuild.setCurrentLevel(currentCharacterLevel + 1);
+				characterBuild.setPerksAvailable(perksAvailable + perksGain);
 			}
 		}
 		
@@ -251,16 +293,48 @@ public class Controller {
 		boolean result = characterBuild.getSkills()[currentSkill.getId()].removeLevel();
 		
 		if(!result && warningStatus) {
-			
+			Main.displayAlert(AlertType.INFORMATION, 
+					"Skill level decrease alert", 
+					"Skill is on the minimum functional level:", 
+					"Skill is either on the minimal level for your character or some perk(s) requires this level.");
 		}
 		else {
+			int currentCharacterLevel = characterBuild.getCurrentLevel();
+			int currentSkillLevel = characterBuild.getSkills()[currentSkill.getId()].getCurrentLevel();
+			double currentXP = characterBuild.getCurrentXP();
+			double gainXP =  getXPGain(currentSkillLevel, BuildConstants.SKILL_XP_MULTS[currentSkill.getId()]);
 			
+			characterBuild.setCurrentXP(currentXP - gainXP);
+			
+			if(currentXP < getLevelUpXP(currentCharacterLevel - 1)) {
+				int perksAvailable = characterBuild.getPerksAvailable();
+				int perksGain = characterBuild.getPerkCntAtLevelUp()[currentCharacterLevel];
+				characterBuild.setCurrentLevel(currentCharacterLevel - 1);
+				characterBuild.setPerksAvailable(perksAvailable - perksGain);
+			}
 		}
 		
 		displayStatus();
 	}
 	
 	public static void resetSkill() {
+		while(characterBuild.getSkills()[currentSkill.getId()].removeLevel()) {
+			int currentCharacterLevel = characterBuild.getCurrentLevel();
+			int currentSkillLevel = characterBuild.getSkills()[currentSkill.getId()].getCurrentLevel();
+			double currentXP = characterBuild.getCurrentXP();
+			double gainXP =  getXPGain(currentSkillLevel, BuildConstants.SKILL_XP_MULTS[currentSkill.getId()]);
+			
+			characterBuild.setCurrentXP(currentXP - gainXP);
+			
+			if(currentXP < getLevelUpXP(currentCharacterLevel - 1)) {
+				int perksAvailable = characterBuild.getPerksAvailable();
+				System.out.println(currentCharacterLevel);
+				int perksGain = characterBuild.getPerkCntAtLevelUp()[currentCharacterLevel];
+				characterBuild.setCurrentLevel(currentCharacterLevel - 1);
+				characterBuild.setPerksAvailable(perksAvailable - perksGain);
+			}
+		}
+		
 		characterBuild.getSkills()[currentSkill.getId()].resetSkill();
 		displayStatus();
 	}
@@ -269,7 +343,13 @@ public class Controller {
 		boolean result = characterBuild.getSkills()[currentSkill.getId()].getPerks()[perkIndex].takeLevel();
 		
 		if(!result && warningStatus) {
-			
+			Main.displayAlert(AlertType.INFORMATION, 
+					"Perk level increase alert", 
+					"All available levels already taken:", 
+					"You have already taken all available levels of the perk.");
+		}
+		else {
+			characterBuild.setPerksAvailable(characterBuild.getPerksAvailable()-1);
 		}
 		
 		displayStatus();
@@ -279,7 +359,13 @@ public class Controller {
 		boolean result = characterBuild.getSkills()[currentSkill.getId()].getPerks()[perkIndex].removeLevel();
 		
 		if(!result && warningStatus) {
-			
+			Main.displayAlert(AlertType.INFORMATION, 
+					"Perk level decrease alert", 
+					"No levels taken yet:", 
+					"You have not taken any level in the perk.");
+		}
+		else {
+			characterBuild.setPerksAvailable(characterBuild.getPerksAvailable()+1);
 		}
 		
 		displayStatus();

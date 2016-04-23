@@ -3,12 +3,14 @@ package view;
 import java.io.File;
 
 import app.Controller;
+import app.Main;
 import javafx.application.Platform;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -87,11 +89,22 @@ public class AppMenuBar extends MenuBar {
 		
 		File file = fileChooser.showSaveDialog(new Stage());
 		
-		if(Controller.saveBuild(file)) {
-			
-		}
-		else {
-			
+		if(file != null) {
+			if(Controller.saveBuild(file)) {
+				Main.displayAlert(AlertType.INFORMATION, 
+						"Save build confirmation", 
+						"Success:", 
+						"The build was succesfuly saved in the file.");
+			}
+			else {
+				if(Controller.getWarningStatus()) {
+					Main.displayAlert(AlertType.ERROR, 
+							"Save build error", 
+							"Error:", 
+							"The build couldn't be saved in the file."
+							+ "Make sure you have actually started the creation.");
+				}
+			}
 		}
 	}
 	
@@ -101,12 +114,22 @@ public class AppMenuBar extends MenuBar {
 		
 		File file = fileChooser.showOpenDialog(new Stage());
 		
-		
-		if(Controller.loadBuild(file)) {
-			
-		}
-		else {
-			
+		if(file != null) {
+			if(Controller.loadBuild(file)) {
+				Main.displayAlert(AlertType.INFORMATION, 
+						"Load build confirmation", 
+						"Success:", 
+						"The build was succesfuly loaded from the file.");
+			}
+			else {
+				if(Controller.getWarningStatus()) {
+					Main.displayAlert(AlertType.ERROR, 
+							"Load build error", 
+							"Error:", 
+							"The build wasn't loaded from the file."
+							+ "Make sure you're trying to load the correct file (correct format).");
+				}
+			}
 		}
 	}
 	

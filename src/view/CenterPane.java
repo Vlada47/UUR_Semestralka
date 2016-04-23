@@ -47,6 +47,10 @@ public class CenterPane extends TabPane {
 		generalTab.setDisable(disable);
 	}
 	
+	public void setGeneralTabControlDisable(boolean disable) {
+		generalTab.setControlDisable(disable);
+	}
+	
 	public void setSkillTabDisable(boolean disable) {
 		skillTab.setDisable(disable);
 	}

@@ -157,26 +157,24 @@ public class GeneralTab extends Tab {
 	
 	private void confirmAction() {
 		Controller.setBuildBase(raceComboBox.getValue(), genderComboBox.getValue(), specComboBox.getValue(), primAttrComboBox.getValue(), secAttrComboBox.getValue(), birthsignComboBox.getValue());
-		raceComboBox.setDisable(true);
-		genderComboBox.setDisable(true);
-		specComboBox.setDisable(true);
-		primAttrComboBox.setDisable(true);
-		secAttrComboBox.setDisable(true);
-		birthsignComboBox.setDisable(true);
-		confirmButt.setDisable(true);
+		Controller.setGeneralTabControlDisable(true);
 		Controller.setDevelopmentTabsDisable(false);
 	}
 	
 	private void resetAction() {
 		Controller.setDevelopmentTabsDisable(true);
+		Controller.setGeneralTabControlDisable(false);
 		Controller.clearBuild();
-		raceComboBox.setDisable(false);
-		genderComboBox.setDisable(false);
-		specComboBox.setDisable(false);
-		primAttrComboBox.setDisable(false);
-		secAttrComboBox.setDisable(false);
-		birthsignComboBox.setDisable(false);
-		confirmButt.setDisable(false);
+	}
+	
+	public void setControlDisable(boolean disable) {
+		raceComboBox.setDisable(disable);
+		genderComboBox.setDisable(disable);
+		specComboBox.setDisable(disable);
+		primAttrComboBox.setDisable(disable);
+		secAttrComboBox.setDisable(disable);
+		birthsignComboBox.setDisable(disable);
+		confirmButt.setDisable(disable);
 	}
 	
 	private void changeInfoAction(String text) {
