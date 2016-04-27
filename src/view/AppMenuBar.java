@@ -25,9 +25,7 @@ public class AppMenuBar extends MenuBar {
 	private static final String LOAD_BUILD_LABEL = "Load Build";
 	private static final String WARNING_MODE_LABEL = "Warning Mode";
 	private static final String EXIT_APP_LABEL = "Exit Application";
-	private static final String ABOUT_LABEL = "About application";
 	private static final String MANUAL_LABEL = "Usage manual";
-	
 	private static final String SAVE_BUILD_TEXT = "Save build to file";
 	private static final String LOAD_BUILD_TEXT = "Load build from file";
 	
@@ -65,13 +63,10 @@ public class AppMenuBar extends MenuBar {
 	private Menu createHelpMenu() {
 		Menu menu = new Menu(HELP_MENU_LABEL);
 		
-		MenuItem aboutItem = new MenuItem(ABOUT_LABEL);
-		aboutItem.setOnAction(event -> showAbout());
-		
 		MenuItem manualItem = new MenuItem(MANUAL_LABEL);
 		manualItem.setOnAction(event -> showManual());
 		
-		menu.getItems().addAll(aboutItem, manualItem);
+		menu.getItems().addAll(manualItem);
 		
 		return menu;
 	}
@@ -133,15 +128,11 @@ public class AppMenuBar extends MenuBar {
 		}
 	}
 	
+	private void showManual() {
+		HelpWindow.getInstance();
+	}
+	
 	private void quitApp() {
 		Platform.exit();
-	}
-	
-	private void showAbout() {
-		HelpWindow.getInstance(HelpWindow.ABOUT_WINDOW);
-	}
-	
-	private void showManual() {
-		HelpWindow.getInstance(HelpWindow.MANUAL_WINDOW);
 	}
 }

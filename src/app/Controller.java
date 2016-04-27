@@ -192,7 +192,9 @@ public class Controller {
 	}
 	
 	public static void clearBuild() {
+		String notes = characterBuild.getBuildNotes();
 		createCharacter();
+		characterBuild.setBuildNotes(notes);
 		displayStatus();
 	}
 	
