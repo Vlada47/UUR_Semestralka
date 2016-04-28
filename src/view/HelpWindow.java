@@ -1,6 +1,8 @@
 package view;
 
+import app.Main;
 import javafx.collections.ListChangeListener;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TreeItem;
@@ -13,8 +15,6 @@ import javafx.stage.Stage;
 import view.recordObjects.HelpRec;
 
 public class HelpWindow extends Stage {
-	
-	private static final String DEFAULT_CONTENT = "";
 	
 	private static final String ROOT_LABEL = "HELP MENU";
 	private static final String ROOT_CONTENT = "Choose the topic from the menu...";
@@ -56,8 +56,15 @@ public class HelpWindow extends Stage {
 	private static final String ATTR_TAB_CONTENT = "There's supposed to be something.";
 	
 	private static final String TITLE = "Application guide";
-	private static final int MIN_WIDTH = 480;
-	private static final int MIN_HEIGHT = 640;
+	
+	private static final int MIN_WIDTH = 800;
+	private static final int MIN_HEIGHT = 600;
+	private static final int ROOT_PANE_SPACING = 10;
+	private static final int ROOT_PANE_PADDING = 10;
+	private static final int CONTENT_PANE_PADDING = 5;
+	private static final int HELP_MENU_WIDTH = 350;
+	private static final int HELP_TREE_HEIGHT = 550;
+	private static final int HTML_VIEW_WIDTH = 450;
 	
 	private static HelpWindow instance = null;
 	
@@ -80,6 +87,9 @@ public class HelpWindow extends Stage {
 		this.setOnCloseRequest(event -> emptyInstance());
 		
 		HBox rootPane = new HBox(createTreeMenu(), createText());
+		rootPane.setPadding(new Insets(ROOT_PANE_PADDING));
+		rootPane.setSpacing(ROOT_PANE_SPACING);
+		
 		Scene scene = new Scene(rootPane, MIN_WIDTH, MIN_HEIGHT);
 		
 		this.setScene(scene);
@@ -88,8 +98,14 @@ public class HelpWindow extends Stage {
 	
 	private Node createTreeMenu() {
 		VBox treeBox = new VBox();
+		treeBox.setPrefWidth(HELP_MENU_WIDTH);
+		treeBox.setPadding(new Insets(CONTENT_PANE_PADDING));
+		treeBox.setStyle(Main.INNER_PANE_BORDER_STYLE);
+		
 		helpMenu = new TreeView<>();
 		helpMenu.setEditable(false);
+		helpMenu.setPrefHeight(HELP_TREE_HEIGHT);
+		helpMenu.setStyle(Main.SECONDARY_LABEL_STYLE);
 		helpMenu.getSelectionModel().getSelectedItems().addListener((ListChangeListener.Change<? extends TreeItem<HelpRec>> change) -> setHelpContent());
 		
 		TreeItem<HelpRec> rootItem = new TreeItem<HelpRec>(new HelpRec(ROOT_LABEL, ROOT_CONTENT));
@@ -111,16 +127,20 @@ public class HelpWindow extends Stage {
 		guideItem.getChildren().addAll(buildingRulesItem, applicationItem);
 		rootItem.getChildren().addAll(aboutItem, guideItem);
 		helpMenu.setRoot(rootItem);
-		
+
 		treeBox.getChildren().add(helpMenu);
 		return treeBox;
 	}
 	
 	private Node createText() {
 		VBox contentBox = new VBox();
+		contentBox.setPrefWidth(HTML_VIEW_WIDTH);
+		contentBox.setPadding(new Insets(CONTENT_PANE_PADDING));
+		contentBox.setStyle(Main.INNER_PANE_BORDER_STYLE);
+		
 		WebView text = new WebView();
 		webEngine = text.getEngine();
-		webEngine.loadContent(DEFAULT_CONTENT);
+		
 		contentBox.getChildren().add(text);
 		return contentBox;
 	}
