@@ -329,6 +329,8 @@ public class Controller {
 	public static void resetSkill() {
 		int currentCharacterLevel = characterBuild.getCurrentLevel();
 		int currentSkillLevel = characterBuild.getSkills()[currentSkill.getId()].getCurrentLevel();
+		int perkPointsTaken = characterBuild.getSkills()[currentSkill.getId()].getTakenPerkCount();
+		characterBuild.setPerksAvailable(characterBuild.getPerksAvailable() + perkPointsTaken);
 		characterBuild.getSkills()[currentSkill.getId()].resetSkill();
 		int targetSkillLevel = characterBuild.getSkills()[currentSkill.getId()].getCurrentLevel();
 		
