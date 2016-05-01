@@ -92,13 +92,11 @@ public class AppMenuBar extends MenuBar {
 						"The build was succesfuly saved in the file.");
 			}
 			else {
-				if(Controller.getWarningStatus()) {
-					Main.displayAlert(AlertType.ERROR, 
-							"Save build error", 
-							"Error:", 
-							"The build couldn't be saved in the file."
-							+ "Make sure you have actually started the creation.");
-				}
+				Main.displayAlert(AlertType.ERROR, 
+						"Save build error", 
+						"Error:", 
+						"The build couldn't be saved in the file."
+						+ "Make sure you have actually started the creation of the build.");
 			}
 		}
 	}
@@ -117,13 +115,11 @@ public class AppMenuBar extends MenuBar {
 						"The build was succesfuly loaded from the file.");
 			}
 			else {
-				if(Controller.getWarningStatus()) {
-					Main.displayAlert(AlertType.ERROR, 
-							"Load build error", 
-							"Error:", 
-							"The build wasn't loaded from the file."
-							+ "Make sure you're trying to load the correct file (correct format).");
-				}
+				Main.displayAlert(AlertType.ERROR, 
+						"Load build error", 
+						"Error:", 
+						"The build wasn't loaded from the file."
+						+ "Make sure you're trying to load the correct file (correct format).");
 			}
 		}
 	}

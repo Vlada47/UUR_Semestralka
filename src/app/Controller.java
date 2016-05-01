@@ -358,16 +358,30 @@ public class Controller {
 	}
 	
 	public static void takePerkLevel(int perkIndex) {
-		boolean result = characterBuild.getSkills()[currentSkill.getId()].getPerks()[perkIndex].takeLevel();
+		int currentSkillLevel = characterBuild.getSkills()[currentSkill.getId()].getCurrentLevel();
+		int perkLevel = characterBuild.getSkills()[currentSkill.getId()].getPerks()[perkIndex].getLevelsTaken();
+		int reqSkillLevel = characterBuild.getSkills()[currentSkill.getId()].getPerks()[perkIndex].getSkillLevels()[perkLevel];
 		
-		if(!result && warningStatus) {
-			Main.displayAlert(AlertType.INFORMATION, 
-					"Perk level increase alert", 
-					"All available levels already taken:", 
-					"You have already taken all available levels of the perk.");
+		if(currentSkillLevel >= reqSkillLevel) {
+			boolean result = characterBuild.getSkills()[currentSkill.getId()].getPerks()[perkIndex].takeLevel();
+			
+			if(!result && warningStatus) {
+				Main.displayAlert(AlertType.INFORMATION, 
+						"Perk level increase alert", 
+						"All available levels already taken:", 
+						"You have already taken all available levels of the perk.");
+			}
+			else {
+				characterBuild.setPerksAvailable(characterBuild.getPerksAvailable()-1);
+			}
 		}
 		else {
-			characterBuild.setPerksAvailable(characterBuild.getPerksAvailable()-1);
+			if(warningStatus) {
+				Main.displayAlert(AlertType.INFORMATION, 
+						"Perk level increase alert", 
+						"Skill level not high enough:", 
+						"This perk (or its currently chosen level) requires higher skill level.");
+			}
 		}
 		
 		displayStatus();
