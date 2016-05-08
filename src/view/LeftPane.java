@@ -124,9 +124,11 @@ public class LeftPane extends VBox {
 		extensionPane.setPadding(new Insets(EXTENSION_PADDING));
 		extensionPane.setStyle(Main.INNER_PANE_BORDER_STYLE);
 		
-		notesArea = new TextArea(DEFAULT_NOTES);
+		notesArea = new TextArea("");
 		notesArea.setDisable(true);
+		notesArea.setWrapText(true);
 		notesArea.setPrefRowCount(NOTES_ROW_CNT);
+		notesArea.setPromptText(DEFAULT_NOTES);
 		
 		saveNotesBttn = new Button(NOTES_BTTN_TEXT);
 		saveNotesBttn.setStyle(Main.BUTTON_LABEL_STYLE);

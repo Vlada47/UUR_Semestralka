@@ -2,8 +2,8 @@ package view.recordObjects;
 
 public class HelpRec {
 	
-	private String label;
-	private String htmlText;
+	private final String label;
+	private final String htmlText;
 	
 	public HelpRec(String label, String htmlText) {
 		this.label = label;

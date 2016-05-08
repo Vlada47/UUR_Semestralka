@@ -8,8 +8,8 @@ public class Attribute implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private PrimaryAttrEnum attribute;
-	private int gain;
+	private final PrimaryAttrEnum attribute;
+	private final int gain;
 	
 	public Attribute(PrimaryAttrEnum attribute, int gain) {
 		this.attribute = attribute;

@@ -62,7 +62,7 @@ public class CharacterBuild implements Serializable {
 		this.currentHealth = BuildConstants.ATTRIBUTE_BASE;
 		this.currentMagicka = BuildConstants.ATTRIBUTE_BASE;
 		this.currentStamina = BuildConstants.ATTRIBUTE_BASE;
-		this.buildNotes = "Notes...";
+		this.buildNotes = "";
 		
 		attributes[0] = new Attribute(PrimaryAttrEnum.HEALTH, 0);
 	}

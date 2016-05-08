@@ -7,9 +7,9 @@ import javafx.beans.property.StringProperty;
 
 public class AttributeRec {
 	
-	private IntegerProperty level;
-	private StringProperty attribute;
-	private IntegerProperty gain;
+	private final IntegerProperty level;
+	private final StringProperty attribute;
+	private final IntegerProperty gain;
 	
 	public AttributeRec(int level, String attribute, int gain) {
 		this.level = new SimpleIntegerProperty(level);

@@ -59,10 +59,12 @@ public class AttrDistribTab extends Tab {
 		
 		Label healthLabel = new Label(PrimaryAttrEnum.HEALTH.getLabel());
 		healthLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
+		
 		Button healthPlusButt = new Button(BUTT_PLUS);
 		healthPlusButt.setPrefSize(ATTR_BTTN_SIZE, ATTR_BTTN_SIZE);
 		healthPlusButt.setStyle(Main.BUTTON_LABEL_STYLE);
 		healthPlusButt.setOnAction(event -> Controller.increaseAttribute(PrimaryAttrEnum.HEALTH));
+		
 		Button healthMinusButt = new Button(BUTT_MINUS);
 		healthMinusButt.setPrefSize(ATTR_BTTN_SIZE, ATTR_BTTN_SIZE);
 		healthMinusButt.setStyle(Main.BUTTON_LABEL_STYLE);
@@ -71,9 +73,11 @@ public class AttrDistribTab extends Tab {
 		Label magickaLabel = new Label(PrimaryAttrEnum.MAGICKA.getLabel());
 		magickaLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
 		Button magickaPlusButt = new Button(BUTT_PLUS);
+		
 		magickaPlusButt.setPrefSize(ATTR_BTTN_SIZE, ATTR_BTTN_SIZE);
 		magickaPlusButt.setStyle(Main.BUTTON_LABEL_STYLE);
 		magickaPlusButt.setOnAction(event -> Controller.increaseAttribute(PrimaryAttrEnum.MAGICKA));
+		
 		Button magickaMinusButt = new Button(BUTT_MINUS);
 		magickaMinusButt.setStyle(Main.BUTTON_LABEL_STYLE);
 		magickaMinusButt.setPrefSize(ATTR_BTTN_SIZE, ATTR_BTTN_SIZE);
@@ -81,10 +85,12 @@ public class AttrDistribTab extends Tab {
 		
 		Label staminaLabel = new Label(PrimaryAttrEnum.STAMINA.getLabel());
 		staminaLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
+		
 		Button staminaPlusButt = new Button(BUTT_PLUS);
 		staminaPlusButt.setPrefSize(ATTR_BTTN_SIZE, ATTR_BTTN_SIZE);
 		staminaPlusButt.setStyle(Main.BUTTON_LABEL_STYLE);
 		staminaPlusButt.setOnAction(event -> Controller.increaseAttribute(PrimaryAttrEnum.STAMINA));
+		
 		Button staminaMinusButt = new Button(BUTT_MINUS);
 		staminaMinusButt.setPrefSize(ATTR_BTTN_SIZE, ATTR_BTTN_SIZE);
 		staminaMinusButt.setStyle(Main.BUTTON_LABEL_STYLE);

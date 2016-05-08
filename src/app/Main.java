@@ -3,8 +3,6 @@ package app;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import view.AppMenuBar;
@@ -36,9 +34,7 @@ public class Main extends Application {
 	
 	private static final int STAGE_MIN_WIDTH = 1280;
 	private static final int STAGE_MIN_HEIGHT = 600;
-	
-	private static final int NODE_MARGIN_VERTICAL = 10;
-	private static final int NODE_MARGIN_HORIZONTAL = 10;
+	private static final int NODE_MARGIN = 10;
 	
 	private AppMenuBar appMenuBar;
 	private LeftPane leftPane;
@@ -65,18 +61,10 @@ public class Main extends Application {
 		root.setTop(appMenuBar);
 		root.setLeft(leftPane);
 		root.setCenter(centerPane);
-		BorderPane.setMargin(leftPane, new Insets(NODE_MARGIN_VERTICAL, NODE_MARGIN_HORIZONTAL, NODE_MARGIN_VERTICAL, NODE_MARGIN_HORIZONTAL));
-		BorderPane.setMargin(centerPane, new Insets(NODE_MARGIN_VERTICAL, NODE_MARGIN_HORIZONTAL, NODE_MARGIN_VERTICAL, NODE_MARGIN_HORIZONTAL));
+		BorderPane.setMargin(leftPane, new Insets(NODE_MARGIN));
+		BorderPane.setMargin(centerPane, new Insets(NODE_MARGIN));
 		
 		primaryStage.setScene(scene);
 		primaryStage.show();
-	}
-	
-	public static void displayAlert(AlertType alertType, String title, String headerText, String contentText) {
-		Alert alert = new Alert(alertType);
-		alert.setTitle(title);
-		alert.setHeaderText(headerText);
-		alert.setContentText(contentText);
-		alert.showAndWait();
 	}
 }

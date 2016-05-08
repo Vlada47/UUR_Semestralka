@@ -61,12 +61,4 @@ public class Perk implements Serializable {
 	public int getLevelsTaken() {
 		return levelsTaken;
 	}
-	
-	@Override
-	public String toString() {
-		String str = "Perk "+label+":\n"
-				+ "- levels "+levelsTaken+"/"+maxLevel+".";
-		
-		return str;
-	}
 }

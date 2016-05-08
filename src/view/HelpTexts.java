@@ -115,7 +115,7 @@ public class HelpTexts {
 													+ "<li><b>Maximal level</b> - displays how many perk points can be invested into this perk.</li>"
 													+ "<li><b>Skill level</b> - required skill level to be able to take this perk. For perks with multiple levels it lists the skill level requirement for each level.</li>"
 													+ "</ul>"
-													+ "To invest perk point into the perk, user has to <b>double-click</b> on the row. To take the perk point from the perk, user has to <b>hold CTRL and click</b> on the row. User can invest perk points even if the current number available is 0 (the count will negative in that case).</p>"
+													+ "To invest perk point into the perk, user has to <b>double-click with primary mouse button</b> on the row. To take the perk point from the perk, user has to <b>click with secondary mouse button</b> on the row. User can invest perk points even if the current number available is 0 (the count will negative in that case).</p>"
 													+ "<h3>Control section</h3>"
 													+ "<p>This section allows the user to switch to another skill with the combo box, increase skill level with <b>+</b> button, decrease skill level with <b>-</b> button and reset the whole skill (set level to starting value after confirming the build creation and remove all invested perk points from perks) with <b>Reset</b> button.</p>";
 	

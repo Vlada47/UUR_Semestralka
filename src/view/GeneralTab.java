@@ -30,6 +30,7 @@ public class GeneralTab extends Tab {
 	private static final int BTTN_HEIGHT = 35;
 	
 	private static final int DETAIL_BOX_SPACING = 20;
+	private static final int DETAIL_AREA_ROWS = 25;
 	
 	private static final String TAB_LABEL = "GENERAL";
 	private static final String PROP_PANE_LABEL = "Properties";
@@ -65,51 +66,57 @@ public class GeneralTab extends Tab {
 		
 		Label raceLabel = new Label(RaceEnum.LABEL);
 		raceLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
+		
 		raceComboBox = new ComboBox<>();
 		raceComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		raceComboBox.getItems().setAll(RaceEnum.values());
 		raceComboBox.setValue(RaceEnum.ALTMER);
-		raceComboBox.setOnAction(event -> changeInfoAction(raceComboBox.getValue().getDescription()));
+		raceComboBox.setOnAction(event -> changeInfoAction());
 		
 		Label genderLabel = new Label(GenderEnum.LABEL);
 		genderLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
+		
 		genderComboBox = new ComboBox<>();
 		genderComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		genderComboBox.getItems().setAll(GenderEnum.values());
 		genderComboBox.setValue(GenderEnum.MALE);
-		genderComboBox.setOnAction(event -> changeInfoAction(genderComboBox.getValue().getDescription()));
+		genderComboBox.setOnAction(event -> changeInfoAction());
 		
 		Label specLabel = new Label(SpecializationEnum.LABEL);
 		specLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
+		
 		specComboBox = new ComboBox<>();
 		specComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		specComboBox.getItems().setAll(SpecializationEnum.values());
 		specComboBox.setValue(SpecializationEnum.COMBAT);
-		specComboBox.setOnAction(event -> changeInfoAction(specComboBox.getValue().getDescription()));
+		specComboBox.setOnAction(event -> changeInfoAction());
 		
 		Label primAttrLabel = new Label(PrimaryAttrEnum.LABEL);
 		primAttrLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
+		
 		primAttrComboBox = new ComboBox<>();
 		primAttrComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		primAttrComboBox.getItems().setAll(PrimaryAttrEnum.values());
 		primAttrComboBox.setValue(PrimaryAttrEnum.HEALTH);
-		primAttrComboBox.setOnAction(event -> changeInfoAction(primAttrComboBox.getValue().getDescription()));
+		primAttrComboBox.setOnAction(event -> changeInfoAction());
 		
 		Label secAttrLabel = new Label(SecondaryAttrEnum.LABEL);
 		secAttrLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
+		
 		secAttrComboBox = new ComboBox<>();
 		secAttrComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		secAttrComboBox.getItems().setAll(SecondaryAttrEnum.values());
 		secAttrComboBox.setValue(SecondaryAttrEnum.STRENGTH);
-		secAttrComboBox.setOnAction(event -> changeInfoAction(secAttrComboBox.getValue().getDescription()));
+		secAttrComboBox.setOnAction(event -> changeInfoAction());
 		
 		Label birthsignLabel = new Label(BirthsignEnum.LABEL);
 		birthsignLabel.setStyle(Main.SECONDARY_LABEL_STYLE);
+		
 		birthsignComboBox = new ComboBox<>();
 		birthsignComboBox.setPrefWidth(COMBO_BOX_WIDTH);
 		birthsignComboBox.getItems().setAll(BirthsignEnum.values());
 		birthsignComboBox.setValue(BirthsignEnum.APPRENTICE);
-		birthsignComboBox.setOnAction(event -> changeInfoAction(birthsignComboBox.getValue().getDescription()));
+		birthsignComboBox.setOnAction(event -> changeInfoAction());
 		
 		confirmButt = new Button(CONF_BUTT_LABEL);
 		confirmButt.setStyle(Main.BUTTON_LABEL_STYLE);
@@ -150,6 +157,9 @@ public class GeneralTab extends Tab {
 		
 		infoArea = new TextArea("");
 		infoArea.setEditable(false);
+		infoArea.setWrapText(true);
+		infoArea.setPrefRowCount(DETAIL_AREA_ROWS);
+		changeInfoAction();
 		infoBox.getChildren().addAll(detailLabel, infoArea);
 		
 		return infoBox;
@@ -162,9 +172,11 @@ public class GeneralTab extends Tab {
 	}
 	
 	private void resetAction() {
-		Controller.setDevelopmentTabsDisable(true);
-		Controller.setGeneralTabControlDisable(false);
-		Controller.clearBuild();
+		if(Controller.confirmBuildReset()) {
+			Controller.setDevelopmentTabsDisable(true);
+			Controller.setGeneralTabControlDisable(false);
+			Controller.clearBuild();
+		}
 	}
 	
 	public void setControlDisable(boolean disable) {
@@ -177,8 +189,21 @@ public class GeneralTab extends Tab {
 		confirmButt.setDisable(disable);
 	}
 	
-	private void changeInfoAction(String text) {
-		infoArea.setText(text);
+	private void changeInfoAction() {
+		String info = raceComboBox.getValue().getLabel()+":\n"
+					+ raceComboBox.getValue().getDescription() + "\n\n"
+					+ genderComboBox.getValue().getLabel()+":\n"
+					+ genderComboBox.getValue().getDescription() + "\n\n"
+					+ specComboBox.getValue().getLabel()+":\n"
+					+ specComboBox.getValue().getDescription() + "\n\n"
+					+ primAttrComboBox.getValue().getLabel()+":\n"
+					+ primAttrComboBox.getValue().getDescription() + "\n\n"
+					+ secAttrComboBox.getValue().getLabel()+":\n"
+					+ secAttrComboBox.getValue().getDescription() + "\n\n"
+					+ birthsignComboBox.getValue().getLabel()+":\n"
+					+ birthsignComboBox.getValue().getDescription();
+		
+		infoArea.setText(info);
 	}
 	
 	public void setRaceValue(RaceEnum race) {

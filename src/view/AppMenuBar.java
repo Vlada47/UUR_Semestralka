@@ -3,14 +3,12 @@ package view;
 import java.io.File;
 
 import app.Controller;
-import app.Main;
 import javafx.application.Platform;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -62,65 +60,41 @@ public class AppMenuBar extends MenuBar {
 	
 	private Menu createHelpMenu() {
 		Menu menu = new Menu(HELP_MENU_LABEL);
-		
 		MenuItem manualItem = new MenuItem(MANUAL_LABEL);
 		manualItem.setOnAction(event -> showManual());
-		
 		menu.getItems().addAll(manualItem);
 		
 		return menu;
 	}
 	
 	private void newBuildAction() {
-		Controller.createCharacter();
-		Controller.setInfoFieldsDisable(false);
-		Controller.setBuildNotesDisable(false);
-		Controller.setGeneralTabDisable(false);
+		if(Controller.confirmNewBuild()) {
+			Controller.createCharacter();
+			Controller.setInfoFieldsDisable(false);
+			Controller.setBuildNotesDisable(false);
+			Controller.setGeneralTabDisable(false);
+			Controller.setGeneralTabControlDisable(false);
+			Controller.setDevelopmentTabsDisable(true);
+		}
 	}
 	
 	private void saveBuildAction() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle(SAVE_BUILD_TEXT);
-		
 		File file = fileChooser.showSaveDialog(new Stage());
 		
 		if(file != null) {
-			if(Controller.saveBuild(file)) {
-				Main.displayAlert(AlertType.INFORMATION, 
-						"Save build confirmation", 
-						"Success:", 
-						"The build was succesfuly saved in the file.");
-			}
-			else {
-				Main.displayAlert(AlertType.ERROR, 
-						"Save build error", 
-						"Error:", 
-						"The build couldn't be saved in the file."
-						+ "Make sure you have actually started the creation of the build.");
-			}
+			Controller.saveBuild(file);
 		}
 	}
 	
 	private void loadBuildAction() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle(LOAD_BUILD_TEXT);
-		
 		File file = fileChooser.showOpenDialog(new Stage());
 		
 		if(file != null) {
-			if(Controller.loadBuild(file)) {
-				Main.displayAlert(AlertType.INFORMATION, 
-						"Load build confirmation", 
-						"Success:", 
-						"The build was succesfuly loaded from the file.");
-			}
-			else {
-				Main.displayAlert(AlertType.ERROR, 
-						"Load build error", 
-						"Error:", 
-						"The build wasn't loaded from the file."
-						+ "Make sure you're trying to load the correct file (correct format).");
-			}
+			Controller.loadBuild(file);
 		}
 	}
 	

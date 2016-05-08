@@ -17,6 +17,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -162,10 +163,10 @@ public class SkillTab extends Tab {
 	private void rowClickAction(MouseEvent event, TableRow<PerkRec> row) {
 		int perkIndex = row.getItem().getIndex();
 		
-		if(event.getClickCount() == 2) {
+		if(event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
 			Controller.takePerkLevel(perkIndex);
 		}
-		else if(event.getClickCount() == 1 && event.isControlDown()){
+		else if(event.getButton() == MouseButton.SECONDARY && event.getClickCount() == 1){
 			Controller.removePerkLevel(perkIndex);
 		}
 	}
