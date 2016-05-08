@@ -31,49 +31,119 @@ import view.LeftPane;
 import view.recordObjects.AttributeRec;
 import view.recordObjects.PerkRec;
 
+/**
+ * The controller class of the applications. It contains a number of methods, which server as "broker" between the data model and view elements.
+ * Class and its methods are completely static and can be accessed from any place of the application (the public ones). 
+ * @author Vlada47
+ *
+ */
 public class Controller {
 	
+	/**
+	 * Reference to the left pane instance.
+	 */
 	private static LeftPane leftPane;
+	
+	/**
+	 * Reference to the center pane instance.
+	 */
 	private static CenterPane centerPane;
 	
+	/**
+	 * Variable indicating warning status (true/false) of the application.
+	 * It is used for displaying alerts and notifications. It's defaulted to true.
+	 */
 	private static boolean warningStatus = true;
+	
+	/**
+	 * Indicator of currently chosen skill on skill tab.
+	 * It is defaulted to Illusion skill (first value from {@code SkillEnum} enumerator).
+	 */
 	private static SkillEnum currentSkill = SkillEnum.ILLUSION;
+	
+	/**
+	 * Instance of the character build.
+	 */
 	private static CharacterBuild characterBuild;
 	
+	/**
+	 * Method which saves the references to main GUI instances, so the controller can make changes on GUI.
+	 * @param lp	instance of the left pane
+	 * @param cp	instance of the center pane
+	 */
 	public static void setGuiReferences(LeftPane lp, CenterPane cp) {
 		leftPane = lp;
 		centerPane = cp;
 	}
 	
+	/**
+	 * Method, which purpose is to disable fields with values on the left pane.
+	 * It calls {@code setTextFieldsDisable} method from {@code LeftPane} class.
+	 * @param disable	true/false
+	 */
 	public static void setInfoFieldsDisable(boolean disable) {
 		leftPane.setTextFieldsDisable(disable);
 	}
 	
+	/**
+	 * Method, which purpose is to disable text area and save button for notes on the left pane.
+	 * It calls {@code setExtensionPaneDisable} method from {@code LeftPane} class.
+	 * @param disable	true/false
+	 */
 	public static void setBuildNotesDisable(boolean disable) {
 		leftPane.setExtensionPaneDisable(disable);
 	}
 	
+	/**
+	 * Method, which purpose is to disable the general tab on center pane.
+	 * It calls {@code setGeneralTabDisable} method from {@code CenterPane} class.
+	 * @param disable	true/false
+	 */
 	public static void setGeneralTabDisable(boolean disable) {
 		centerPane.setGeneralTabDisable(disable);
 	}
 	
+	/**
+	 * Method, which purpose is to disable the combo boxes and confirm button of the general tab.
+	 * It calls {@code setGeneralTabControlDisable} method from {@code CenterPane} class.
+	 * @param disable	true/false
+	 */
 	public static void setGeneralTabControlDisable(boolean disable) {
 		centerPane.setGeneralTabControlDisable(disable);
 	}
 	
+	/**
+	 * Method, which purpose is to disable skill and attributes tabs on the center pane.
+	 * It calls {@code setSkillTabDisable} and {@code setAttrDistribTabDisable} method from {@code CenterPane} class.
+	 * @param disable	true/false
+	 */
 	public static void setDevelopmentTabsDisable(boolean disable) {
 		centerPane.setSkillTabDisable(disable);
 		centerPane.setAttrDistribTabDisable(disable);
 	}
 	
+	/**
+	 * Setter for the {@code warningStatus} variable.
+	 * @param wStatus true/false
+	 */
 	public static void setWarningStatus(boolean wStatus) {
 		warningStatus = wStatus;
 	}
 	
+	/**
+	 * Getter for the {@code warningStatus} variable.
+	 * @return	current value of the {@code warningStatus} variable
+	 */
 	public static boolean getWarningStatus() {
 		return warningStatus;
 	}
 	
+	/**
+	 * Method servicing the functionality for saving the file with current build serialization.
+	 * It uses {@code ObjectOutputStream} to write the serialized {@code CharacterBuild} object.
+	 * If the build was saved successfully, the information alert is displayed, otherwise the error alert will appear.
+	 * @param file	target file for the build's content
+	 */
 	public static void saveBuild(File file) {
 		boolean success = false;
 		
@@ -106,6 +176,13 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * Method servicing the functionality for loading the file with saved build serialization.
+	 * It uses {@code ObjectInputStream} to read the serialized {@code CharacterBuild} object.
+	 * If the build was loaded successfully, the information alert is displayed, otherwise the error alert will appear.
+	 * Depending on the value of the {@code buildSet} attribute of the object, different GUI parts are enabled/disabled.
+	 * @param file	source file with the build's content
+	 */
 	public static void loadBuild(File file) {
 		boolean success = false;
 		
@@ -128,7 +205,9 @@ public class Controller {
 			setInfoFieldsDisable(false);
 			setBuildNotesDisable(false);
 			setGeneralTabDisable(false);
+			
 			if(characterBuild.isBuildSet()) {
+				//character is already in the development state
 				setGeneralTabControlDisable(true);
 				setDevelopmentTabsDisable(false);
 			}
@@ -154,6 +233,10 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * Method, which initiates the {@code characterBuild} object and creates the array with {@code Skill} instances for it.
+	 * Then it calls other methods, which creates more starting data for the build instance.
+	 */
 	public static void createCharacter() {
 			Skill[] skills = new Skill[BuildConstants.SKILLS_COUNT];
 			
@@ -168,6 +251,11 @@ public class Controller {
 			displayStatus();
 	}
 	
+	/**
+	 * Method, which iterates through the {@code Skill} instances of the build and creates the arrays of {@code Perk} instances for them.
+	 * Perk data are read from constants in {@code PerkConstants} class.
+	 * @param skills	array of {@code Skill} instances of the build
+	 */
 	private static void createCharacterPerks(Skill[] skills) {
 		for(Skill skill : skills) {
 			Perk[] perks = new Perk[PerkConstants.PERK_LABELS[skill.getSkillInstance().getId()].length];
@@ -183,6 +271,11 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * This method represents sort of a control, when starting a new build. In case the {@code characterBuild} instance is already set,
+	 * the confirmation alert is displayed. If user confirms the action, method returns true otherwise false.
+	 * @return	confirmation of the action (true/false)
+	 */
 	public static boolean confirmNewBuild() {
 		boolean confirm = true;
 		
@@ -201,8 +294,21 @@ public class Controller {
 		return confirm;
 	}
 	
+	/**
+	 * Method, which sets up general build creation (when confirming the choices on the general tab).
+	 * It takes passed choices (selected enum values) and saves them in the data model. More attributes
+	 * on data model are modified depending on aforementioned choices (exact values are taken from {@code BuildConstants} class).
+	 * At the end it sets up {@code buildSet} attribute of the build instance on true (indicating it is now in development state).
+	 * @param race					selected race
+	 * @param gender				selected gender
+	 * @param specialization		selected specialization
+	 * @param primaryAttribute		selected primary attribute
+	 * @param secondaryAttribute	selected secondary attribute
+	 * @param birthsign				selected birthsign
+	 */
 	public static void setBuildBase(RaceEnum race, GenderEnum gender, SpecializationEnum specialization, PrimaryAttrEnum primaryAttribute, SecondaryAttrEnum secondaryAttribute, BirthsignEnum birthsign) {
 		if(characterBuild != null) {
+			//setting up choices in the model
 			characterBuild.setRace(race);
 			characterBuild.setGender(gender);
 			characterBuild.setSpecialization(specialization);
@@ -210,6 +316,7 @@ public class Controller {
 			characterBuild.setSecondaryAttribute(secondaryAttribute);
 			characterBuild.setBirthsign(birthsign);
 			
+			//modifying selected primary attribute based on the choices
 			int health = characterBuild.getCurrentHealth();
 			health += BuildConstants.HEALTH_MODIFIERS[race.getId()][gender.getId()];
 			if(primaryAttribute == PrimaryAttrEnum.HEALTH) health += BuildConstants.PRIMARY_ATTRIBUTE_BONUS;
@@ -222,10 +329,12 @@ public class Controller {
 			stamina += BuildConstants.STAMINA_MODIFIERS[race.getId()][gender.getId()];
 			if(primaryAttribute == PrimaryAttrEnum.STAMINA) stamina += BuildConstants.PRIMARY_ATTRIBUTE_BONUS;
 			
+			//setting up current values of primary attributes
 			characterBuild.setCurrentHealth(health);
 			characterBuild.setCurrentMagicka(magicka);
 			characterBuild.setCurrentStamina(stamina);
 			
+			//setting up skill modifiers based on race choice
 			Skill[] skills = characterBuild.getSkills();
 			for(int i = 0; i < skills.length; i++) {
 				int skillId = skills[i].getSkillInstance().getId();
@@ -239,6 +348,11 @@ public class Controller {
 		displayStatus();
 	}
 	
+	/**
+	 * Method, which initiates new build by calling {@code createCharacter} method.
+	 * It is used, when "Reset" button on general tab is used. 
+	 * It saves the notes by storing them shortly in its {@code String} and setting it back to the build. 
+	 */
 	public static void clearBuild() {
 		String notes = characterBuild.getBuildNotes();
 		createCharacter();
@@ -246,6 +360,11 @@ public class Controller {
 		displayStatus();
 	}
 	
+	/**
+	 * This method represents sort of a control, when reseting the build.
+	 * If user confirms the action, method returns true otherwise false.
+	 * @return	confirmation of the action (true/false)
+	 */
 	public static boolean confirmBuildReset() {
 		boolean confirm = true;
 		
@@ -264,6 +383,15 @@ public class Controller {
 		return confirm;
 	}
 	
+	/**
+	 * Method, which services increasing of chosen primary attribute per character level gained.
+	 * It first calculates the target level, for which the attribute is being increased and then checks,
+	 * whether this level is lesser or equal to current character level. If yes, then the attribute is added
+	 * to its respective stack and also to the list of attribute gains. Current value of that attribute
+	 * is also increased on the build. If not, then the alert may be shown to inform the user that all levels
+	 * of the character has been used to distribute primary attributes.
+	 * @param attribute	chosen attribute to increase
+	 */
 	public static void increaseAttribute(PrimaryAttrEnum attribute) {
 		int healthLvlCnt = characterBuild.getLastHealth().size();
 		int magickaLvlCnt = characterBuild.getLastMagicka().size();
@@ -301,6 +429,12 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * Method, which services decreasing of chosen primary attribute per character level gained.
+	 * Unless the stack of chosen attribute is empty, it pops the last one and removes (by calling {@code removeAttribute} method) it from list of all
+	 * distributed primary attributes. It then decrease the current value of the respective attribute in the build.
+	 * @param attribute	chosen attribute to decrease
+	 */
 	public static void decreaseAttribute(PrimaryAttrEnum attribute) {
 		if(attribute == PrimaryAttrEnum.HEALTH) {
 			if(!characterBuild.getLastHealth().empty()) {
@@ -327,6 +461,10 @@ public class Controller {
 		displayStatus();
 	}
 	
+	/**
+	 * Method, which iterates through the array of distributed attributes and removes the one, of which instance is passed to the method. 
+	 * @param a	attribute to be be removed
+	 */
 	private static void removeAttribute(Attribute a) {
 		Attribute[] attributes = characterBuild.getAttributes();
 		
@@ -335,11 +473,21 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * Method for switching currently set skill (when user selects different one on skill tab).
+	 * @param skill	the skill, which will be switched to
+	 */
 	public static void changeSkill(SkillEnum skill) {
 		currentSkill = skill;
 		displayStatus();
 	}
 	
+	/**
+	 * Method which handles increasing of the currently set skill level and resulting calculations of the character's main level.
+	 * Unless the skill is on the maximal level, it gets increased on the build and then it is calculated (with the aid of few other methods)
+	 * how much experience points was gained by the skill level increase. If the experience gained is big enough for advance in the main character level,
+	 * this level value is increased by 1 and perk points available are increased by respective amount.
+	 */
 	public static void takeSkillLevel() {
 		boolean result = characterBuild.getSkills()[currentSkill.getId()].takeLevel();
 		
@@ -371,6 +519,13 @@ public class Controller {
 		displayStatus();
 	}
 	
+	/**
+	 * Method which handles decreasing of the currently set skill level and resulting calculations of the character's main level.
+	 * Unless the skill is on the minimal level or the character has some perk chosen, which requires the current level,
+	 * it gets decreased on the build and then it is calculated (with the aid of few other methods)
+	 * how much experience points was lost by the skill level decrease. If the experience lost is big enough for losing the main character level,
+	 * this level value is decreased by 1 and perk points available are decreased by respective amount.
+	 */
 	public static void removeSkillLevel() {
 		boolean result = characterBuild.getSkills()[currentSkill.getId()].removeLevel();
 		
@@ -403,6 +558,12 @@ public class Controller {
 		displayStatus();
 	}
 	
+	/**
+	 * Method, which handles reseting currently chosen skill. It decreases the skill level to starting value of the character
+	 * and removes all perk investments. Character level and perk points available are calculated accordingly. It basically
+	 * works in the same way as {@code takeSkillLevel} and {@code removeSkillLevel}, it basically loops the removing the skill level
+	 * and it is modified by some incomprehensible black magic.
+	 */
 	public static void resetSkill() {
 		int currentCharacterLevel = characterBuild.getCurrentLevel();
 		int currentSkillLevel = characterBuild.getSkills()[currentSkill.getId()].getCurrentLevel();
@@ -434,6 +595,13 @@ public class Controller {
 		displayStatus();
 	}
 	
+	/**
+	 * Method, which handles taking perk level process. It finds perk's instance from passed {@code perkIndex} value.
+	 * Then it checks for skill level requirement of respective perk level, if the level is not high enough, alert may be displayed informing the user.
+	 * If it is, then level is taken, unless the method {@code takeLevel} from {@code Perk} class returns false (in that case another alert may be displayed).
+	 * Amoun of perk points available is then decremented by 1.
+	 * @param perkIndex	index of the perk, which the level is being invested in
+	 */
 	public static void takePerkLevel(int perkIndex) {
 		Perk selectedPerk = characterBuild.getSkills()[currentSkill.getId()].getPerks()[perkIndex];
 		int currentSkillLevel = characterBuild.getSkills()[currentSkill.getId()].getCurrentLevel();
@@ -465,6 +633,12 @@ public class Controller {
 		displayStatus();
 	}
 	
+	/**
+	 * Method, which handles removing perk level process. It finds perk's instance from passed {@code perkIndex} value.
+	 * Unless there is no level taken yet in this perk, the last level invested is removed and amount of perk points
+	 * available is incremented by 1.
+	 * @param perkIndex	index of the perk, which the level is being remove from
+	 */
 	public static void removePerkLevel(int perkIndex) {
 		Perk selectedPerk = characterBuild.getSkills()[currentSkill.getId()].getPerks()[perkIndex];
 		boolean result = selectedPerk.removeLevel();
@@ -482,11 +656,20 @@ public class Controller {
 		displayStatus();
 	}
 	
+	/**
+	 * Method, which stores passed {@code String} into build's notes.
+	 * @param notes	notes to be saved
+	 */
 	public static void saveBuildNotes(String notes) {
 		characterBuild.setBuildNotes(notes);
 	}
 	
+	/**
+	 * Method that is called from various other methods of controller. It passes all relevant values from the model to view objects,
+	 * which can then display them.
+	 */
 	private static void displayStatus() {
+		//displaying values in left pane
 		leftPane.setLevelValue(characterBuild.getCurrentLevel());
 		leftPane.setPerksValue(characterBuild.getPerksAvailable());
 		leftPane.setHealthValue(characterBuild.getCurrentHealth());
@@ -494,6 +677,7 @@ public class Controller {
 		leftPane.setStaminaValue(characterBuild.getCurrentStamina());
 		leftPane.setNotesText(characterBuild.getBuildNotes());
 		
+		//setting the values for combo boxes on general tab
 		RaceEnum race = characterBuild.getRace();
 		GenderEnum gender = characterBuild.getGender();
 		SpecializationEnum spec = characterBuild.getSpecialization();
@@ -501,15 +685,22 @@ public class Controller {
 		SecondaryAttrEnum secAttr = characterBuild.getSecondaryAttribute();
 		BirthsignEnum birthsign = characterBuild.getBirthsign();
 		
+		//creating record lists for tables on development tabs and getting current skill level
 		int skillLevel = characterBuild.getSkills()[currentSkill.getId()].getCurrentLevel();
 		List<PerkRec> perks = createPerkRecList(characterBuild.getSkills()[currentSkill.getId()].getPerks());
 		List<AttributeRec> attributes = createAttrRecList(characterBuild.getAttributes());
 		
+		//passing values to center pane tabs
 		centerPane.setGeneralTabValues(race, gender, spec, primAttr, secAttr, birthsign);
 		centerPane.setSkillTabValues(currentSkill, skillLevel, perks);
 		centerPane.setAttrDistribTabList(attributes);
 	}
 	
+	/**
+	 * Method that calculates how many perk points will be awarded per main level gained.
+	 * The numbers are saved into an array, which belongs to {@code characterBuild} instance for later use.
+	 * Basically the index of the array means the character level.
+	 */
 	private static void createPerkCntLevelUps() {
 		double sum = 0.0;
 		int index = 0;
@@ -529,6 +720,11 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * Method that calculates how much will get primary attribute increased per individual character level.
+	 * The numbers are saved into an array, which belongs to {@code characterBuild} instance for later use.
+	 * Basically the index of the array means the character level.
+	 */
 	private static void createAttrGainsLevelUps() {
 		int index = 0;
 		
@@ -545,6 +741,11 @@ public class Controller {
 		}
 	}	
 	
+	/**
+	 * Method that an array of perks and makes them into list of {@code PerkRec} instances that can be displayed on table of perks.
+	 * @param perks	array with perks from the {@code Skill} instance
+	 * @return	list of {@code PerkRec} instances, which can be displayed by perk table
+	 */
 	private static List<PerkRec> createPerkRecList(Perk[] perks) {
 		List<PerkRec> perkRecList = new ArrayList<>();
 		
@@ -562,6 +763,12 @@ public class Controller {
 		return perkRecList;
 	}
 	
+	/**
+	 * Method that an array of attribute increases and makes them into list of {@code AttributeRec} instances
+	 * that can be displayed on table of attribute distribution.
+	 * @param attributes	array with attribute increases from the {@code Skill} instance
+	 * @return	list of {@code AttributeRec} instances, which can be displayed by attribute distribution table
+	 */
 	private static List<AttributeRec> createAttrRecList(Attribute[] attributes) {
 		List<AttributeRec> attrRecList = new ArrayList<>();
 		
@@ -574,14 +781,33 @@ public class Controller {
 		return attrRecList;
 	}
 	
+	/**
+	 * Method with formula for calculation of experience points gain given the skill level and skill XP modifier.
+	 * @param skillLevel	skill level, for which the XP gain should be calculated
+	 * @param skillXPMod	modifier for XP gain for certain skill
+	 * @return	experience points gain
+	 */
 	private static double getXPGain(int skillLevel, double skillXPMod) {
 		return (skillLevel * skillXPMod);
 	}
 	
+	/**
+	 * Method with formula for calculation of experience points needed to level up the character from current level.
+	 * @param currentLevel	current character level
+	 * @return	experience points needed to level up
+	 */
 	private static double getLevelUpXP(int currentLevel) {
 		return (currentLevel + 3) * 25;
 	}
 	
+	/**
+	 * Method that displays the alert with text passed from input parameters. It returns the {@code ButtonType}, which user clicked on.
+	 * @param alertType		type of the alert
+	 * @param title			title of the alert
+	 * @param headerText	header text of the alert
+	 * @param contentText	content text of the alert
+	 * @return	type of the button, which the user clicked on
+	 */
 	private static ButtonType displayAlert(AlertType alertType, String title, String headerText, String contentText) {
 		Alert alert = new Alert(alertType);
 		alert.setTitle(title);
