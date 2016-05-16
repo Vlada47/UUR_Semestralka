@@ -1,6 +1,7 @@
 package app;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -91,6 +92,7 @@ public class Main extends Application {
 		primaryStage.setTitle(APP_TITLE);
 		primaryStage.setMinWidth(STAGE_MIN_WIDTH);
 		primaryStage.setMinHeight(STAGE_MIN_HEIGHT);
+		primaryStage.setOnCloseRequest(event -> Platform.exit());
 		
 		//creating the scene and its root node
 		BorderPane root = new BorderPane();

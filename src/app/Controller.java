@@ -67,6 +67,25 @@ public class Controller {
 	private static CharacterBuild characterBuild;
 	
 	/**
+	 * Method for confirmation of exiting the application.
+	 * @return	true/false
+	 */
+	public static boolean endAppConfirmed() {
+		ButtonType result = displayAlert(AlertType.CONFIRMATION, 
+				"Confirmation alert", 
+				"Exiting application confirmation:", 
+				"Make sure any changes you made are saved or you don't care about them, because they will gone... forever. "
+				+ "Are you sure you want to continue?");
+		
+		if(result == ButtonType.OK) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
 	 * Method which saves the references to main GUI instances, so the controller can make changes on GUI.
 	 * @param lp	instance of the left pane
 	 * @param cp	instance of the center pane
@@ -74,6 +93,26 @@ public class Controller {
 	public static void setGuiReferences(LeftPane lp, CenterPane cp) {
 		leftPane = lp;
 		centerPane = cp;
+	}
+	
+	/**
+	 * Method that informs, if the build was started/loaded.
+	 * It is used for saving build functionality.
+	 * @return	true/false
+	 */
+	public static boolean characterBuildInstanceExists() {
+		if(characterBuild != null) {
+			return true;
+		}
+		else {
+			displayAlert(AlertType.ERROR, 
+					"Save build error", 
+					"Error:", 
+					"The build hasn't been started yet. "
+					+ "You have to start a build or load some from the file to be able to save it.");
+			
+			return false;
+		}
 	}
 	
 	/**
@@ -147,24 +186,17 @@ public class Controller {
 	public static void saveBuild(File file) {
 		boolean success = false;
 		
-		if(characterBuild != null) {
-			try {
-				FileOutputStream fos = new FileOutputStream(file);
-				ObjectOutputStream oos = new ObjectOutputStream(fos);
+		try {
+			FileOutputStream fos = new FileOutputStream(file);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
 				
-				oos.writeObject(characterBuild);
-				oos.close();
-				fos.close();
-				success = true;
-				
-				displayAlert(AlertType.INFORMATION, 
-						"Save build confirmation", 
-						"Success:", 
-						"The build was succesfuly saved in the file.");
-			}
-			catch (IOException e) {
-				e.printStackTrace();
-			}
+			oos.writeObject(characterBuild);
+			oos.close();
+			fos.close();
+			success = true;
+		}
+		catch (IOException e) {
+			//e.printStackTrace();
 		}
 		
 		if(!success) {
@@ -172,7 +204,7 @@ public class Controller {
 					"Save build error", 
 					"Error:", 
 					"The build couldn't be saved in the file. "
-					+ "Make sure you have actually started the creation of the build.");
+					+ "Make sure you can create a file on target position.");
 		}
 	}
 	
@@ -195,13 +227,7 @@ public class Controller {
 			fis.close();
 			success = true;
 			
-			displayAlert(AlertType.INFORMATION, 
-					"Load build confirmation", 
-					"Success:", 
-					"The build was succesfuly loaded from the file.");
-			
 			displayStatus();
-			
 			setInfoFieldsDisable(false);
 			setBuildNotesDisable(false);
 			setGeneralTabDisable(false);
@@ -218,10 +244,10 @@ public class Controller {
 			
 		} 
 		catch(IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} 
 		catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		if(!success) {
@@ -606,8 +632,12 @@ public class Controller {
 		Perk selectedPerk = characterBuild.getSkills()[currentSkill.getId()].getPerks()[perkIndex];
 		int currentSkillLevel = characterBuild.getSkills()[currentSkill.getId()].getCurrentLevel();
 		int perkLevel = selectedPerk.getLevelsTaken();
-		int reqSkillLevel = selectedPerk.getSkillLevels()[perkLevel];
+		int reqSkillLevel = 0;
 		
+		if(perkLevel < selectedPerk.getSkillLevels().length) {
+			reqSkillLevel = selectedPerk.getSkillLevels()[perkLevel];
+		}
+		 
 		if(currentSkillLevel >= reqSkillLevel) {
 			boolean result = selectedPerk.takeLevel();
 			

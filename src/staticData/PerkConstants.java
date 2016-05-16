@@ -1,7 +1,15 @@
 package staticData;
 
+/**
+ * Static class with constant values for individual perks of all skills.
+ * @author Vlada47
+ *
+ */
 public class PerkConstants {
 	
+	/**
+	 * Names of individual perks for all skills. Primary index = skill, secondary index = perk. 
+	 */
 	public static final String[][] PERK_LABELS = {
 			{"Studies: Novice Illusion","Studies: Apprentice Illusion","Studies: Adept Illusion","Studies: Expert Illusion","Studies: Master Illusion","Deep Analysis","Unknowable Horror","Debilitating Terror","Invigorate","Transcendental Mantle","Soothing Voice","Subjugation","Raging Heart","Maniacal Surge","Quiet Casting","Hallucinating Echoes","Waning Presence","Retaliating Echoes","Vessel","Phantom Host","Recursive Insanity","Focus: The Minddweller","Focus: The Puppetmaster"},
 			{"Studies: Novice Conjuration","Studies: Apprentice Conjuration","Studies: Adept Conjuration","Studies: Expert Conjuration","Studies: Master Conjuration","Advanced Summoning","Ancient Rites","Harvest","Bone Mastery","Bone Conservation","Great Bone Mastery","Tongues of Old","Gravebound","Recurring Nightmare","Elemental Potency","Oblivion Binding","Chaotic Binding","Reclaim","Daedric Shell","Promise of Power","Elemental Fury","Synergetic Link","Pact","Focus: The Gatekeeper","Focus: The Necromage"},
@@ -23,6 +31,9 @@ public class PerkConstants {
 			{"Alchemist","Prodigy: The Tinkerer","Adhesive Explosives","Elemental Burst","Fuse","Elemental Bombard","Advanced Eplosives","Skilled Enhancer","Distillation","Poison Burst","Venomous Coercion","Poison Armor","Overdose","Physician","Overstimulation","Mutation","Fast Metabolism","Field Alchemy","Purity"}
 	};
 	
+	/**
+	 * Maximum level values for individual perks of all skills. Primary index = skill, secondary index = perk.
+	 */
 	public static final int[][] PERK_MAX_LEVELS = {
 			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1},
 			{ 1, 1, 1, 1, 1, 1, 1, 2, 3, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1},
@@ -44,6 +55,10 @@ public class PerkConstants {
 			{ 3, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1}
 	};
 	
+	/**
+	 * Required skill level for individual levels of individual perks of all skills.
+	 * Primary index = skill, secondary index = perk, tertiary index = perk level.
+	 */
 	public static final int[][][] PERK_SKILL_LEVELS = {
 			{{0},{20},{40},{65},{90},{20},{15},{40},{15},{55},{35},{65},{55},{75},{70},{30},{50},{40,55},{75},{70},{90},{95},{95}},
 			{{0},{20},{40},{65},{90},{35},{50},{15,40},{25,45,65},{40},{90},{50},{45},{75},{20},{40},{50,65},{30,50},{45},{60},{40},{60},{75},{95},{95}},
@@ -65,6 +80,10 @@ public class PerkConstants {
 			{{0,30,60},{20},{35},{35},{60},{60},{75},{80,95},{25,65},{40},{50},{35},{70},{25,45},{50},{40},{50},{70},{90}}
 	};
 	
+	/**
+	 * Indexes of perks, which counts as predecessors for individual perks of all skills.
+	 * Primary index = skill, secondary index = perk, tertiary index = predecessor perk index.
+	 */
 	public static final int[][][] PERK_REQ_PERKS = {
 			{{-1},{0},{1},{2},{3},{0},{0},{6},{0},{8},{1},{10},{2},{12},{3},{1},{2,15},{15},{3,16,17},{17},{18},{19},{7,9,11,13}},
 			{{-1},{0},{1},{2},{3},{1},{2},{0},{7},{8},{9},{7},{11},{12},{0},{14},{15},{14},{17},{16,18},{14},{20},{19,21},{22},{10,13}},

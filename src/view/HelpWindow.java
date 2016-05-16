@@ -14,6 +14,11 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import view.recordObjects.HelpRec;
 
+/**
+ * Instance of this class represents a window containing a guide to the application.
+ * @author Vlada47
+ *
+ */
 public class HelpWindow extends Stage {
 	
 	private static final String TITLE = "Application guide";
@@ -40,11 +45,25 @@ public class HelpWindow extends Stage {
 	private static final int HELP_TREE_HEIGHT = 550;
 	private static final int HTML_VIEW_WIDTH = 450;
 	
+	/**
+	 * Singleton instance of this class.
+	 */
 	private static HelpWindow instance = null;
 	
+	/**
+	 * {@code TreeView} with navigation to guide's individual topics.
+	 */
 	private TreeView<HelpRec> helpMenu;
+	
+	/**
+	 * {@code WebEngine} instance for the ability to display a text formatted by HTML tags.
+	 */
 	private WebEngine webEngine;
 	
+	/**
+	 * Method for getting the singleton instance.
+	 * @return	instance of this class
+	 */
 	public static HelpWindow getInstance() {
 		
 		if(instance == null) {
@@ -54,6 +73,10 @@ public class HelpWindow extends Stage {
 		return instance;
 	}
 	
+	/**
+	 * Private constructor of this class. It sets basic attributes of the {@code Stage}, adds visible elements via respective methods
+	 * and then it displays the window.
+	 */
 	private HelpWindow() {
 		this.setTitle(TITLE);
 		this.setMinWidth(MIN_WIDTH);
@@ -70,6 +93,11 @@ public class HelpWindow extends Stage {
 		this.show();
 	}
 	
+	/**
+	 * Method creating a component (node) with {@code TreeView} style topic navigation. It creates individual {@code TreeItem} instances
+	 * and adds them to the tree.
+	 * @return	a node with navigation tree
+	 */
 	private Node createTreeMenu() {
 		VBox treeBox = new VBox();
 		treeBox.setPrefWidth(HELP_MENU_WIDTH);
@@ -106,6 +134,10 @@ public class HelpWindow extends Stage {
 		return treeBox;
 	}
 	
+	/**
+	 * Method creating a component (node) containing a {@code WebView} with HTML formated text.
+	 * @return	a node with {@code WebView} instance
+	 */
 	private Node createText() {
 		VBox contentBox = new VBox();
 		contentBox.setPrefWidth(HTML_VIEW_WIDTH);
@@ -119,14 +151,20 @@ public class HelpWindow extends Stage {
 		return contentBox;
 	}
 	
+	/**
+	 * Method handling the event, when selecting individual topics from navigation tree.
+	 * It gets the HTML text from selected tree record and pass it to a content of the {@code WebEngine} instance. 
+	 */
 	private void setHelpContent() {
 		TreeItem<HelpRec> item = helpMenu.getSelectionModel().getSelectedItem();
 		String content = item.getValue().getHtmlText();
 		webEngine.loadContent(content);
 	}
 	
+	/**
+	 * Method handling exiting the help window, it destroys the instance of this class.
+	 */
 	private void emptyInstance() {
 		instance = null;
 	}
-
 }

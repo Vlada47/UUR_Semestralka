@@ -26,6 +26,11 @@ import staticData.BuildConstants;
 import staticData.SkillEnum;
 import view.recordObjects.PerkRec;
 
+/**
+ * Instance of this class represents a tab handling skill leveling and perk points distribution functionality.
+ * @author Vlada47
+ *
+ */
 public class SkillTab extends Tab {
 	
 	private static final int COMPONENT_PADDING = 10;
@@ -57,12 +62,35 @@ public class SkillTab extends Tab {
 	private static final String MAXLVL_COL = "Maximal level";
 	private static final String SKILLLVL_COL = "Skill levels";
 	
+	/**
+	 * {@code Label} with the name of currently chosen skill.
+	 */
 	private Label skillLabel;
+	
+	/**
+	 * {@code TextField} with the level of currently chosen skill.
+	 */
 	private TextField levelField;
+	
+	/**
+	 * {@code TableView} with perks of the currently chosen skill.
+	 */
 	private TableView<PerkRec> perkTable;
+	
+	/**
+	 * A list with {@code PerkRec} instances representing individual perks in the table.
+	 */
 	private ObservableList<PerkRec> perkList;
+	
+	/**
+	 * {@code ComboBox} for selection of currently displayed skill.
+	 */
 	private ComboBox<SkillEnum> skillBox;
 	
+	/**
+	 * Constructor of the {@code SkillTab} class. It calls the constructor of the {@code Tab} class,
+	 * sets its label and then adds elements via respective methods. The tab starts as disabled.
+	 */
 	public SkillTab() {
 		super();
 		this.setText(TAB_LABEL);
@@ -70,6 +98,10 @@ public class SkillTab extends Tab {
 		this.setDisable(true);
 	}
 	
+	/**
+	 * Method creating a node with skill label, current skill level and the perk table (via {@code createTable} method).
+	 * @return	a node with elements of the pane
+	 */
 	private Node createTableBox() {
 		VBox tableBox = new VBox();
 		tableBox.setPrefSize(TABLE_BOX_WIDTH, TABLE_BOX_HEIGHT);
@@ -87,6 +119,10 @@ public class SkillTab extends Tab {
 		return tableBox;
 	}
 	
+	/**
+	 * Method creating the table with perks. It displays the strings from {@code PerkRec} class.
+	 * @return	a table of perks
+	 */
 	private TableView<PerkRec> createTable() {
 		perkList = FXCollections.observableArrayList();
 		perkList.add(new PerkRec(-1, "Perk 1", "...", 0, 1, "0"));
@@ -126,6 +162,11 @@ public class SkillTab extends Tab {
 		return perkTable;
 	}
 	
+	/**
+	 * Creates the node with control elements of this tab - {@code ComboBox} for skill selection,
+	 * buttons for increasing/decreasing current skill level and button for reseting the skill to the starting state.
+	 * @return	a node with control elements
+	 */
 	private Node createButtonPane() {
 		GridPane buttonPane = new GridPane();
 		buttonPane.setPadding(new Insets(COMPONENT_PADDING));
@@ -160,6 +201,13 @@ public class SkillTab extends Tab {
 		return buttonPane;
 	}
 	
+	/**
+	 * Method handling the event of clicking on perk table row. When the primary mouse button is pressed twice,
+	 * the {@code takePerkLevel} method is called. When the secondary mouse button is pressed once,
+	 * the {@code removePerkLevel} method is called. The respective perk ID is passed to those methods.
+	 * @param event	mouse event
+	 * @param row	the row, which was mouse event registered on
+	 */
 	private void rowClickAction(MouseEvent event, TableRow<PerkRec> row) {
 		int perkIndex = row.getItem().getIndex();
 		
@@ -171,15 +219,27 @@ public class SkillTab extends Tab {
 		}
 	}
 	
+	/**
+	 * Method setting the currently displayed skill.
+	 * @param skill	currently displayed skill
+	 */
 	public void setCurrentSkill(SkillEnum skill) {
 		skillBox.setValue(skill);
 		skillLabel.setText(skill.getLabel());
 	}
 	
+	/**
+	 * Method setting the level of currently displayed skill.
+	 * @param level	level of the skill
+	 */
 	public void setCurrentSkillLevel(int level) {
 		levelField.setText(Integer.toString(level));
 	}
 	
+	/**
+	 * Method setting new instances to list of perks for the perk table.
+	 * @param perkList	list with new instances
+	 */
 	public void setPerkList(List<PerkRec> perkList) {
 		this.perkList.setAll(perkList);
 	}

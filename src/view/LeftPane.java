@@ -14,6 +14,12 @@ import javafx.scene.layout.VBox;
 import staticData.BuildConstants;
 import staticData.PrimaryAttrEnum;
 
+/**
+ * Instance of this class represents application's left pane displaying basic character status,
+ * information like current health, level or perk points available.
+ * @author Vlada47
+ *
+ */
 public class LeftPane extends VBox {
 	
 	private static final int MAIN_PANE_WIDTH = 350;
@@ -40,14 +46,45 @@ public class LeftPane extends VBox {
 	private static final String DEFAULT_NOTES = "Notes...";
 	private static final String NOTES_BTTN_TEXT = "Save notes";
 	
+	/**
+	 * {@code TextField} displaying current character level.
+	 */
 	private TextField levelValueField;
+	
+	/**
+	 * {@code TextField} displaying current number of perk points available.
+	 */
 	private TextField perksValueField;
+	
+	/**
+	 * {@code TextField} displaying current amount of health.
+	 */
 	private TextField healthValueField;
+	
+	/**
+	 * {@code TextField} displaying current amount of magicka.
+	 */
 	private TextField magickaValueField;
+	
+	/**
+	 * {@code TextField} displaying current amount of stamina.
+	 */
 	private TextField staminaValueField;
+	
+	/**
+	 * {@code TextArea} containing user's notes.
+	 */
 	private TextArea notesArea;
+	
+	/**
+	 * Button with event for saving user's notes.
+	 */
 	private Button saveNotesBttn;
 	
+	/**
+	 * Constructor of the {@code LeftPane} class. It calls constructor of the {@code VBox} class,
+	 * sets basic parameters and then adds elements via respective methods.
+	 */
 	public LeftPane() {
 		super();
 		this.setPrefWidth(MAIN_PANE_WIDTH);
@@ -57,6 +94,10 @@ public class LeftPane extends VBox {
 		this.getChildren().addAll(createGeneralInfoPane(), createExtensionPane());
 	}
 	
+	/**
+	 * Method creating sub-pane with informative text fields and labels identifying them.
+	 * @return	a node with informative text fields
+	 */
 	private Node createGeneralInfoPane() {
 		GridPane generalInfoPane = new GridPane();
 		generalInfoPane.setHgap(GRID_HGAP);
@@ -117,6 +158,10 @@ public class LeftPane extends VBox {
 		return generalInfoPane;
 	}
 	
+	/**
+	 * Method creating the sub-pane with {@code TextArea} for user's notes and button for saving them to data model.
+	 * @return	a node with elements handling user's notes
+	 */
 	private Node createExtensionPane() {
 		VBox extensionPane = new VBox();
 		extensionPane.setAlignment(Pos.CENTER);
@@ -140,30 +185,58 @@ public class LeftPane extends VBox {
 		return extensionPane;
 	}
 	
+	/**
+	 * Setter for the text of {@code levelValueField} instance.
+	 * @param value	value for the respective text field
+	 */
 	public void setLevelValue(int value) {
 		levelValueField.setText(Integer.toString(value));
 	}
 	
+	/**
+	 * Setter for the text of {@code perksValueField} instance.
+	 * @param value	value for the respective text field
+	 */
 	public void setPerksValue(int value) {
 		perksValueField.setText(Integer.toString(value));
 	}
 	
+	/**
+	 * Setter for the text of {@code healthValueField} instance.
+	 * @param value	value for the respective text field
+	 */
 	public void setHealthValue(int value) {
 		healthValueField.setText(Integer.toString(value));
 	}
 	
+	/**
+	 * Setter for the text of {@code magickaValueField} instance.
+	 * @param value	value for the respective text field
+	 */
 	public void setMagickaValue(int value) {
 		magickaValueField.setText(Integer.toString(value));
 	}
 	
+	/**
+	 * Setter for the text of {@code staminaValueField} instance.
+	 * @param value	value for the respective text field
+	 */
 	public void setStaminaValue(int value) {
 		staminaValueField.setText(Integer.toString(value));
 	}
 	
+	/**
+	 * Setter for the text of the {@code TextArea} for user's notes.
+	 * @param value	user's notes
+	 */
 	public void setNotesText(String text) {
 		notesArea.setText(text);
 	}
 	
+	/**
+	 * Method disabling/enabling individual text fields.
+	 * @param disable	true/false
+	 */
 	public void setTextFieldsDisable(boolean disable) {
 		levelValueField.setDisable(disable);
 		perksValueField.setDisable(disable);
@@ -172,6 +245,10 @@ public class LeftPane extends VBox {
 		staminaValueField.setDisable(disable);
 	}
 	
+	/**
+	 * Method disabling/enabling elements handling user's notes.
+	 * @param disable	true/false
+	 */
 	public void setExtensionPaneDisable(boolean disable) {
 		notesArea.setDisable(disable);
 		saveNotesBttn.setDisable(disable);

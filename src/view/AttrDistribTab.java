@@ -20,6 +20,12 @@ import javafx.scene.layout.VBox;
 import staticData.PrimaryAttrEnum;
 import view.recordObjects.AttributeRec;
 
+/**
+ * Instance of this class represents a tab with character attributes distribution functionality.
+ * It contains a table, which displays the distribution and buttons to alter distribution.
+ * @author Vlada47
+ *
+ */
 public class AttrDistribTab extends Tab {
 	
 	private static final int COMPONENT_PADDING = 20;
@@ -41,9 +47,20 @@ public class AttrDistribTab extends Tab {
 	private static final String ATTR_COL = "Attribute";
 	private static final String GAIN_COL = "Gain";
 	
+	/**
+	 * A {@code TableView} displaying the attribute distribution of the character.
+	 */
 	private TableView<AttributeRec> attributeTable;
+	
+	/**
+	 * List with records of attribute distribution.
+	 */
 	private ObservableList<AttributeRec> attributeList;
-
+	
+	/**
+	 * Constructor of the {@code AttrDistribTab} class. It calls the constructor of the {@code Tab} class,
+	 * sets the label of the tab and the content of the tab via respective methods. The tab starts as disabled.
+	 */
 	public AttrDistribTab() {
 		super();
 		this.setText(TAB_LABEL);
@@ -51,6 +68,10 @@ public class AttrDistribTab extends Tab {
 		this.setDisable(true);
 	}
 	
+	/**
+	 * Method creating a component (node) with buttons for adding and removing attributes to/from distribution.
+	 * @return	a {@code Node} with control buttons
+	 */
 	private Node createButtonPane() {
 		GridPane buttonPane = new GridPane();
 		buttonPane.setPadding(new Insets(COMPONENT_PADDING));
@@ -109,6 +130,11 @@ public class AttrDistribTab extends Tab {
 		return buttonPane;
 	}
 	
+	/**
+	 * Method creating {@code TableView} for attribute distribution along with the list of {@code AttributeRec} instances.
+	 * The list starts with one instance of the gain equal to 0 as the player can add to the distribution from character level 2.
+	 * @return	a node with the {@code TableView}
+	 */
 	private Node createTable() {
 		VBox tableBox = new VBox();
 		tableBox.setPadding(new Insets(COMPONENT_PADDING));
@@ -140,6 +166,10 @@ public class AttrDistribTab extends Tab {
 		return tableBox;
 	}
 	
+	/**
+	 * Method for setting new content of the list with {@code AttributeRec} instances.
+	 * @param attributeList	a list with new records
+	 */
 	public void setAttributeList(List<AttributeRec> attributeList) {
 		this.attributeList.setAll(attributeList);
 	}

@@ -1,5 +1,10 @@
 package staticData;
 
+/**
+ * Enumerator for individual birthsigns.
+ * @author Vlada47
+ *
+ */
 public enum BirthsignEnum {
 	APPRENTICE(0,"The Apprentice","Regenerate Magicka (100%), Weakness to Magicka (50%)."),
 	ATRONACH(1,"The Atronach","Fortify Magicka (+150), Spell Absorption (50%), No Magicka Regeneration."),
@@ -17,8 +22,19 @@ public enum BirthsignEnum {
 	
 	public static final String LABEL = "Birthsign"; 
 	
+	/**
+	 * ID of the birthsign.
+	 */
 	private final int id;
+	
+	/**
+	 * Name of the birthsign.
+	 */
 	private final String label;
+	
+	/**
+	 * Description of the birthsign.
+	 */
 	private final String description;
 	
 	BirthsignEnum(int id, String label, String description) {

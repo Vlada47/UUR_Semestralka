@@ -1,5 +1,10 @@
 package staticData;
 
+/**
+ * Enumerator for individual secondary attributes.
+ * @author Vlada47
+ *
+ */
 public enum SecondaryAttrEnum {
 	STRENGTH(0,"Strength","+20 Carry Weight, +5 Unarmed Damage, Melee attacks do 5% more damage."),
 	ENDURANCE(1,"Endurance","Power Attacks require 10% less stamina, Stamina Regen increasesd by 10%, Block 5% more damage."),
@@ -11,8 +16,19 @@ public enum SecondaryAttrEnum {
 	
 	public static final String LABEL = "Secondary Attribute"; 
 	
+	/**
+	 * ID of the secondary attribute.
+	 */
 	private final int id;
+	
+	/**
+	 * Name of the secondary attribute.
+	 */
 	private final String label;
+	
+	/**
+	 * Description of the secondary attribute.
+	 */
 	private final String description;
 	
 	SecondaryAttrEnum(int id, String label, String description) {

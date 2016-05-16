@@ -1,5 +1,10 @@
 package staticData;
 
+/**
+ * Enumerator for individual races.
+ * @author Vlada47
+ *
+ */
 public enum RaceEnum {		
 	ALTMER(0,"Altmer",
 			"Fortify Magicka +50; magicka regenerates up to 50% faster at the expense of stamina regeneration.  The higher your stamina, the faster your magicka regenerates (and the slower your stamina regeneration is).  As your stamina is depleted, more 'energy' goes into regenerating stamina and your magicka regen bonus decreases."),
@@ -24,8 +29,19 @@ public enum RaceEnum {
 	
 	public static final String LABEL = "Race"; 
 	
+	/**
+	 * ID of the race.
+	 */
 	private final int id;
+	
+	/**
+	 * Name of the race.
+	 */
 	private final String label;
+	
+	/**
+	 * Description of the race.
+	 */
 	private final String description;
 	
 	RaceEnum(int id, String label, String description) {

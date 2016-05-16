@@ -1,5 +1,10 @@
 package staticData;
 
+/**
+ * Enumerator for individual skills.
+ * @author Vlada47
+ *
+ */
 public enum SkillEnum {
 	
 	ILLUSION(0,"Illusion"),
@@ -21,7 +26,14 @@ public enum SkillEnum {
 	SPEECH(16,"Speechcraft"),
 	ALCHEMY(17,"Alchemy");
 	
+	/**
+	 * ID of the skill.
+	 */
 	private final int id;
+	
+	/**
+	 * Name of the skill.
+	 */
 	private final String label;
 	
 	SkillEnum(int id, String label) {

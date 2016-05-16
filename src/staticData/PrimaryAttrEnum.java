@@ -1,5 +1,10 @@
 package staticData;
 
+/**
+ * Enumerator for individual primary attributes.
+ * @author Vlada47
+ *
+ */
 public enum PrimaryAttrEnum {
 	HEALTH(0,"Health","+20 points to Health."),
 	MAGICKA(1,"Magicka","+20 points to Magicka."),
@@ -7,8 +12,19 @@ public enum PrimaryAttrEnum {
 	
 	public static final String LABEL = "Primary Attribute"; 
 	
+	/**
+	 * ID of the primary attribute.
+	 */
 	private final int id;
+	
+	/**
+	 * Name of the primary attribute.
+	 */
 	private final String label;
+	
+	/**
+	 * Description of the primary attribute.
+	 */
 	private final String description;
 	
 	PrimaryAttrEnum(int id, String label, String description) {

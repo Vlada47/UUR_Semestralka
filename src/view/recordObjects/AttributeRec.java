@@ -5,10 +5,26 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Instances of this class represents records for the attribute distribution table.
+ * @author Vlada47
+ *
+ */
 public class AttributeRec {
 	
+	/**
+	 * Character level of the distribution.
+	 */
 	private final IntegerProperty level;
+	
+	/**
+	 * Chosen attribute of the distribution.
+	 */
 	private final StringProperty attribute;
+	
+	/**
+	 * Number of points distributed to chosen attribute.
+	 */
 	private final IntegerProperty gain;
 	
 	public AttributeRec(int level, String attribute, int gain) {

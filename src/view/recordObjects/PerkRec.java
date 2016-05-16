@@ -5,13 +5,41 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Instances of this class represents records for the perk table.
+ * @author Vlada47
+ *
+ */
 public class PerkRec {
 	
+	/**
+	 * Index of the perk.
+	 */
 	private final int index;
+	
+	/**
+	 * Name of the perk.
+	 */
 	private final StringProperty title;
+	
+	/**
+	 * List of predecessor perks.
+	 */
 	private final StringProperty reqPerks;
+	
+	/**
+	 * Number of perk points invested into the perk.
+	 */
 	private final IntegerProperty currlevel;
+	
+	/**
+	 * Maximum level of the perk.
+	 */
 	private final IntegerProperty maxLevel;
+	
+	/**
+	 * Required skill level for each perk level.
+	 */
 	private final StringProperty skillLevels;
 	
 	public PerkRec(int index, String title, String reqPerks, int currLevel, int maxLevel, String skillLevels) {

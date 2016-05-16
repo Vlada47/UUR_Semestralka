@@ -19,6 +19,11 @@ import staticData.RaceEnum;
 import staticData.SecondaryAttrEnum;
 import staticData.SpecializationEnum;
 
+/**
+ * Instance of this class represents a tab with general character creation functionality.
+ * @author Vlada47
+ *
+ */
 public class GeneralTab extends Tab {
 	
 	private static final int COMPONENT_PADDING = 10;
@@ -38,16 +43,55 @@ public class GeneralTab extends Tab {
 	private static final String CONF_BUTT_LABEL = "Confirm";
 	private static final String RES_BUTT_LABEL = "Reset";
 	
+	/**
+	 * {@code ComboBox} for the character's race choice.
+	 */
 	private ComboBox<RaceEnum> raceComboBox;
-	private ComboBox<GenderEnum> genderComboBox;
-	private ComboBox<SpecializationEnum> specComboBox;
-	private ComboBox<PrimaryAttrEnum> primAttrComboBox;
-	private ComboBox<SecondaryAttrEnum> secAttrComboBox;
-	private ComboBox<BirthsignEnum> birthsignComboBox;
-	private Button confirmButt;
-	private Button resetButt;
-	TextArea infoArea;
 	
+	/**
+	 * {@code ComboBox} for the character's gender choice.
+	 */
+	private ComboBox<GenderEnum> genderComboBox;
+	
+	/**
+	 * {@code ComboBox} for the character's specialization choice.
+	 */
+	private ComboBox<SpecializationEnum> specComboBox;
+	
+	/**
+	 * {@code ComboBox} for the character's primary attribute choice.
+	 */
+	private ComboBox<PrimaryAttrEnum> primAttrComboBox;
+	
+	/**
+	 * {@code ComboBox} for the character's secondary attribute choice.
+	 */
+	private ComboBox<SecondaryAttrEnum> secAttrComboBox;
+	
+	/**
+	 * {@code ComboBox} for the character's birthsign choice.
+	 */
+	private ComboBox<BirthsignEnum> birthsignComboBox;
+	
+	/**
+	 * Button confirming selected choices.
+	 */
+	private Button confirmButt;
+	
+	/**
+	 * Button reseting character building.
+	 */
+	private Button resetButt;
+	
+	/**
+	 * {@code TextArea} displaying information about selected choices.
+	 */
+	private TextArea infoArea;
+	
+	/**
+	 * Constructor of the {@code GeneralTab} class. It calls the constructor of the {@code Tab} class,
+	 * sets the label of the tab and the content of the tab via respective methods. The tab starts as disabled.
+	 */
 	public GeneralTab() {
 		super();
 		this.setText(TAB_LABEL);
@@ -55,6 +99,11 @@ public class GeneralTab extends Tab {
 		this.setDisable(true);
 	}
 	
+	/**
+	 * Method creating a component (node) with combo boxes for selecting character creation choices and buttons for confirming/reseting the character build.
+	 * Combo boxes are given initial value and event, which refreshes information about all choices. 
+	 * @return	a node with control elements
+	 */
 	private Node createPropertiesPane() {
 		GridPane propertiesPane = new GridPane();
 		propertiesPane.setPadding(new Insets(COMPONENT_PADDING));
@@ -147,6 +196,10 @@ public class GeneralTab extends Tab {
 		return propertiesPane;
 	}
 	
+	/**
+	 * Method creating a component with {@code TextArea} containing information about character creation choices.
+	 * @return	a node containing the {@code TextArea}
+	 */
 	private Node createInfoBox() {
 		VBox infoBox = new VBox();
 		infoBox.setPadding(new Insets(COMPONENT_PADDING));
@@ -165,12 +218,22 @@ public class GeneralTab extends Tab {
 		return infoBox;
 	}
 	
+	/**
+	 * Method handling the event, when pressing the button for confirmation of choices.
+	 * It sets selected values to the data model, disables control elements on this tab
+	 * and enables other tabs.
+	 */
 	private void confirmAction() {
 		Controller.setBuildBase(raceComboBox.getValue(), genderComboBox.getValue(), specComboBox.getValue(), primAttrComboBox.getValue(), secAttrComboBox.getValue(), birthsignComboBox.getValue());
 		Controller.setGeneralTabControlDisable(true);
 		Controller.setDevelopmentTabsDisable(false);
 	}
 	
+	/**
+	 * Method handling the event, when pressing the button for reseting the values of character build.
+	 * It calls the {@code confirmBuildReset} method and if case the return is true it enables
+	 * the control elements of this tab and disables other tabs. The build is then cleared.
+	 */
 	private void resetAction() {
 		if(Controller.confirmBuildReset()) {
 			Controller.setDevelopmentTabsDisable(true);
@@ -179,6 +242,10 @@ public class GeneralTab extends Tab {
 		}
 	}
 	
+	/**
+	 * Method handling the enabling/disabling of control elements of this tab. 
+	 * @param disable	true/false
+	 */
 	public void setControlDisable(boolean disable) {
 		raceComboBox.setDisable(disable);
 		genderComboBox.setDisable(disable);
@@ -189,6 +256,11 @@ public class GeneralTab extends Tab {
 		confirmButt.setDisable(disable);
 	}
 	
+	/**
+	 * Method handling the event on individual combo boxes, when changing the value.
+	 * It creates a {@code String} with information about selected choices and passes it
+	 * to respective {@code TextArea}.
+	 */
 	private void changeInfoAction() {
 		String info = raceComboBox.getValue().getLabel()+":\n"
 					+ raceComboBox.getValue().getDescription() + "\n\n"
@@ -206,26 +278,50 @@ public class GeneralTab extends Tab {
 		infoArea.setText(info);
 	}
 	
+	/**
+	 * Setter for the value on {@code raceComboBox} instance.
+	 * @param race	selected race
+	 */
 	public void setRaceValue(RaceEnum race) {
 		raceComboBox.setValue(race);
 	}
 	
+	/**
+	 * Setter for the value on {@code genderComboBox} instance.
+	 * @param gender	selected gender
+	 */
 	public void setGenderValue(GenderEnum gender) {
 		genderComboBox.setValue(gender);
 	}
 	
+	/**
+	 * Setter for the value on {@code specComboBox} instance.
+	 * @param spec	selected specialization
+	 */
 	public void setSpecValue(SpecializationEnum spec) {
 		specComboBox.setValue(spec);
 	}
 	
+	/**
+	 * Setter for the value on {@code primAttrComboBox} instance.
+	 * @param primAttr	selected primary attribute
+	 */
 	public void setPrimAttrValue(PrimaryAttrEnum primAttr) {
 		primAttrComboBox.setValue(primAttr);
 	}
 	
+	/**
+	 * Setter for the value on {@code secAttrComboBox} instance.
+	 * @param secAttr	selected secondary attribute
+	 */
 	public void setSecAttrValue(SecondaryAttrEnum secAttr) {
 		secAttrComboBox.setValue(secAttr);
 	}
 	
+	/**
+	 * Setter for the value on {@code birthsignComboBox} instance.
+	 * @param birthsign	selected birthsign
+	 */
 	public void setBirthsignValue(BirthsignEnum birthsign) {
 		birthsignComboBox.setValue(birthsign);
 	}

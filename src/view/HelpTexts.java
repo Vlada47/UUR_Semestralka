@@ -1,5 +1,10 @@
 package view;
 
+/**
+ * Class containing {@code String} constants with HTML code to be displayed in the help guide.
+ * @author Vlada47
+ *
+ */
 public class HelpTexts {
 	
 	public static final String ROOT_CONTENT = "<h2>Choose the topic from the menu...</h2>";
